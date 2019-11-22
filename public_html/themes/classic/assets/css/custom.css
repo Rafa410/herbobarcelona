@@ -35,13 +35,13 @@
         font-size: 18px;
         position: relative;
         left: -3px;
-        opacity: 0
+        opacity: 0;
+        transition: all 0.4s;
     }
 
     .top-menu a[data-depth="2"]:hover:before, .footer-container li a:hover:before {
         opacity: 1;
         left: 8px;
-        transition: all 0.6s
     }
 
 .footer-container li a:before {
@@ -478,12 +478,12 @@
 }
 
 .texto-footer li a {
-    color: #232323
+    color: #232323;
+    transition: color 0.4s;
 }
 
 .texto-footer a:hover {
     color: #B481C8;
-    transition: color 0.4s
 }
 
 .texto-footer li:before {
@@ -494,7 +494,6 @@
 .texto-footer li:hover:before {
     left: 5px;
     color: #B481C8;
-    transition: all 0.5s
 }
 
 .page_title_area {
@@ -842,9 +841,20 @@ body#checkout section.checkout-step div.forgot-password {
 .blog-footer .row {
     margin: 0 2rem;
 }
+.blog-footer .all-blogs-link{
+    margin-top: 1rem;
+}
+
+#module-xipblog-archive .blog-footer {
+    display: none;
+}
+
+.xipblog_submit_btn {
+    margin-bottom: 2rem;
+}
 
 @media(max-width:359px) {
-        #header .header-nav .top-logo a img {
+    #header .header-nav .top-logo a img {
         max-width: 86%
     }
 
@@ -945,6 +955,12 @@ body#checkout section.checkout-step div.forgot-password {
 
     #cart .featured-products {
         clear: both
+    }
+    .blog-footer {
+        padding: 1rem;
+    }
+    .blog-footer .row {
+        margin: 1rem;
     }
 }
 
