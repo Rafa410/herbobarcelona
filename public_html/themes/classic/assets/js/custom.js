@@ -14,7 +14,7 @@
             case 'product':
                 if (($("#product-details").data("product").quantity > 0)
                     || ($("#product-details").data("product").availability == 'available')
-                      || ($("#product-details").data("product").availability == 'last_remaining_items')) {
+                    || ($("#product-details").data("product").availability == 'last_remaining_items')) {
                     const supplier = $("#product-details").data("product").id_supplier;
                     countdown(supplier);
                     if (supplier == '2') {
@@ -27,7 +27,7 @@
             case 'cart':
                 if ((prestashop.cart.subtotals.shipping.amount == 2.70) || (prestashop.cart.subtotals.shipping.amount == 3.60)
                     || (prestashop.cart.subtotals.shipping.amount == 2.60) || (prestashop.cart.subtotals.shipping.amount == 3.40)
-                        || (prestashop.cart.subtotals.shipping.amount == 2.40)) {
+                    || (prestashop.cart.subtotals.shipping.amount == 2.40)) {
                     supplier = '2';
                 }
                 countdown(supplier);
@@ -139,8 +139,7 @@
             * @supp --> Contiene el ID del proveedor o del transportista.
             * @carrier --> Contiene el ID del transportista cuando hay varios en la misma página (en el Paso 3 del checkout). Por defecto es 0.
          */
-        function countdown(supp, carrier = 0)
-        {
+        function countdown(supp, carrier = 0) {
 
 
             // Carrier ID (Cambiar cada vez que actualizamos los ajustes de un transportista)
@@ -166,10 +165,10 @@
             let sameDay = false;                        // Booleano que indica si el pedido se prepara el mismo día o no, dependiendo de la hora límite (@maxDate).
 
             const hollidays = [     // Lista con los días festivos
-                    [1, 0],     // Año nuevo, 1 Ene.
-                    [1, 4],     // Fiesta del trabajo, 1 May.
-                    [12, 9],    // Fiesta Nacional España, 12 Oct.
-                    [25, 11]    // Navidad, 25 Dic.
+                [1, 0],     // Año nuevo, 1 Ene.
+                [1, 4],     // Fiesta del trabajo, 1 May.
+                [12, 9],    // Fiesta Nacional España, 12 Oct.
+                [25, 11]    // Navidad, 25 Dic.
             ];
 
             const weekDay = [     // Array con los días de la semana para pasar de un número a string
@@ -266,8 +265,7 @@
             {
                 let shippingDays;
 
-                if (currentDate < maxDate)
-                {
+                if (currentDate < maxDate) {
                     sameDay = true;
                 }
 
@@ -291,12 +289,10 @@
                     case '6':            // Punto de recogida oficina Barcelona
                         maxDate.setHours(12, 30, 0);
 
-                        if (sameDay)
-                        {
+                        if (sameDay) {
                             shippingDays = 0;
                         }
-                        else
-                        {
+                        else {
                             shippingDays = 1;
                         }
 
@@ -305,12 +301,10 @@
                     case '3':    // Feliubadaló CAT
                         maxDate.setHours(18, 0, 0);
 
-                        if (sameDay)
-                        {
+                        if (sameDay) {
                             shippingDays = 1;
                         }
-                        else
-                        {
+                        else {
                             shippingDays = 2;
                         }
 
@@ -342,27 +336,22 @@
             /**  caculateDeliveryDate ==> Esta función calcula la fecha de entrega estimada
                 * @nDays --> Número de días a añadir a la fecha actual para llegar a la fecha de entrega prevista.
             */
-            function calculateDeliveryDate(nDays)
-            {
+            function calculateDeliveryDate(nDays) {
                 let deliveryDateMillisec = new Date().getTime();
 
-                while (nDays > 0)
-                {
+                while (nDays > 0) {
                     deliveryDateMillisec += addMillisecondsDay();
-                    
-                    if (!(isWeekend(deliveryDateMillisec)) && !(isHolliday(deliveryDateMillisec)))
-                    {
+
+                    if (!(isWeekend(deliveryDateMillisec)) && !(isHolliday(deliveryDateMillisec))) {
                         nDays--;
                     }
                     count++;
                 }
 
-                if (count == 0)
-                {
+                if (count == 0) {
                     today = true;
                 }
-                else if (count == 1)
-                {
+                else if (count == 1) {
                     tomorrow = true;
                 }
 
@@ -378,26 +367,22 @@
                 return (1 * 24 * 60 * 60 * 1000); // Días * horas * minutos * segundos * milisegundos
             }
 
-            function showRemainingTime()
-            {
+            function showRemainingTime() {
                 currentDate = new Date();   // Fecha actual
 
                 let minsLeft = Math.floor((maxDate - currentDate) / (60 * 1000)); // Minutos totales que hay entre la fecha límite y la fecha actual
                 let hoursLeft = Math.floor(minsLeft / 60);                            // Horas restantes antes de el tiempo límite
                 minsLeft %= 60;                                                       // Minutos restantes antes de el tiempo límite, teniendo en cuenta las horas restantes
 
-                if (hoursLeft === 0)
-                {
+                if (hoursLeft === 0) {
                     countdownMsg.innerHTML = minsLeft + ((minsLeft == 1) ? ' minuto' : ' minutos');
                 }
-                else
-                {
+                else {
                     countdownMsg.innerHTML = hoursLeft + ((hoursLeft == 1) ? ' hr ' : ' hrs ') + minsLeft + ((minsLeft == 1) ? ' min' : ' mins');
                 }
             }
 
-            function showDeliveryDate()
-            {
+            function showDeliveryDate() {
                 const dateMsg = document.getElementsByClassName('dateCountdown')[carrier];
                 const day = weekDay[deliveryDate.getDay()];
                 const date = deliveryDate.getDate();
@@ -417,8 +402,7 @@
                 }
             }
 
-            function showCarrierInfoCheckout(currentMsg, additionalInfo, carrierID)
-            {
+            function showCarrierInfoCheckout(currentMsg, additionalInfo, carrierID) {
                 currentMsg.innerHTML += additionalInfo;
 
                 $(document).on('click', '#btn-toggle-info_' + carrierID, function () {
@@ -595,8 +579,7 @@
             }
         }
 
-        function changeStyleBlogFooter()
-        {
+        function changeStyleBlogFooter() {
             $('.home_blog_post_area.displayFooterBefore').parents('.container').addClass('blog-footer')
         }
 

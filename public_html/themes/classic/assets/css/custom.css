@@ -1,3 +1,7 @@
+a {
+    transition: color 0.3s;
+}
+
 #header .header-top a[data-depth="0"] {
     position: relative
 }
@@ -36,12 +40,13 @@
         position: relative;
         left: -3px;
         opacity: 0;
-        transition: all 0.4s;
+        transition: all 0.4s 0.1s;
     }
 
     .top-menu a[data-depth="2"]:hover:before, .footer-container li a:hover:before {
         opacity: 1;
         left: 8px;
+        transition-delay: 0s;
     }
 
 .footer-container li a:before {
@@ -50,7 +55,8 @@
 }
 
 .footer-container li a:hover:before {
-    left: 2px
+    left: 2px;
+    transition-delay: 0s;
 }
 
 .block-categories .category-sub-menu li:not([data-depth="0"]):not([data-depth="1"]):before {
@@ -175,12 +181,12 @@
 .block-social li {
     padding: 1.43rem;
     border-radius: 50%;
-    background-position: center
+    background-position: center;
+    transition: transform 0.3s
 }
 
     .block-social li:hover {
         transform: scale(1.1);
-        transition: transform 0.3s
     }
 
     .block-social li.facebook {
@@ -813,6 +819,9 @@ a[id^="btn-toggle-info"] i {
 
 body#checkout section.checkout-step div.forgot-password {
     margin-left: 0;
+}
+#checkout .delivery-option img {
+    max-width: 100%;
 }
 
 .wishlistLinkTop .product_image {
