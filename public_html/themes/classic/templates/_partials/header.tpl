@@ -86,8 +86,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <div class="hidden-md-up text-sm-center mobile">
           <div class="float-xs-left" id="menu-icon">
             <span data-target="#mobile_top_menu_wrapper" data-toggle="collapse" class="collapse-icons">
-                <i class="material-icons add">&#xE5D2;</i>
-                <i class="material-icons remove">close</i>
+                  <span></span>
+				  <span></span>
+				  <span></span>
+				  <span></span>
             </span>
           </div>
           <div class="float-xs-left" id="search-icon">
