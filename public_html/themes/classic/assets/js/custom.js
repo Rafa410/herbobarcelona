@@ -21,7 +21,13 @@
                         document.getElementsByClassName("avisoFB")[0].style.display = 'block';
                     }
                 }
+
                 addToCartBtnEffects();
+
+                if (isMobile) {
+                    stickyAddToCart();
+                }
+                
                 break;
 
             case 'cart':
@@ -156,13 +162,13 @@
 
             const countdownMsg = document.getElementById('countdown'); // Elemento HTML que contiene el mensaje del Countdown
 
-            let currentDate = new Date();                       // Fecha actual
+            let currentDate = new Date();               // Fecha actual
             let maxDate = new Date();                   // Hora límite para pasar el pedido y que se prepare el mismo día
             let shippingDays;                           // Número de días a añadir a la fecha actual hasta llegar a la fecha de entrega
             let today = false,                          // Booleanos que indican si el paquete se entrega hoy o mañana, para añadirlo al mensaje.
                 tomorrow = false;
             let count = 0;                              // Contador para saber el nº de días que pasan desde la fecha actual y la fecha de entrega. Si es 1, today = TRUE, si es 2, tomorrow = TRUE.
-            let sameDay = false;                        // Booleano que indica si el pedido se prepara el mismo día o no, dependiendo de la hora límite (@maxDate).
+            let isBeforeMaxDate = false;                // Booleano que indica si el pedido se prepara el mismo día o no, dependiendo de la hora límite (@maxDate).
 
             const hollidays = [     // Lista con los días festivos
                 [1, 0],     // Año nuevo, 1 Ene.
@@ -265,20 +271,16 @@
             {
                 let shippingDays;
 
-                if (currentDate < maxDate) {
-                    sameDay = true;
-                }
-
                 switch (supp)   // Asigna el número de días 'shippingDays' en función del transportista y/o proveedor
                 {
                     case distribudietID:   // Distribudiet - Correos Express
                         maxDate.setHours(16, 0, 0);
 
-                        if (sameDay) // Antes de la hora límite
-                        {
+                        if (currentDate < maxDate) { // Antes de la hora límite
                             shippingDays = 1;
+                            isBeforeMaxDate = true;
                         }
-                        else         // Después de la hora límite
+                        else                        // Después de la hora límite
                         {
                             shippingDays = 2;
                         }
@@ -289,8 +291,9 @@
                     case '6':            // Punto de recogida oficina Barcelona
                         maxDate.setHours(12, 30, 0);
 
-                        if (sameDay) {
+                        if (currentDate < maxDate) {
                             shippingDays = 0;
+                            isBeforeMaxDate = true;
                         }
                         else {
                             shippingDays = 1;
@@ -301,8 +304,9 @@
                     case '3':    // Feliubadaló CAT
                         maxDate.setHours(18, 0, 0);
 
-                        if (sameDay) {
+                        if (currentDate < maxDate) {
                             shippingDays = 1;
+                            isBeforeMaxDate = true;
                         }
                         else {
                             shippingDays = 2;
@@ -314,9 +318,10 @@
                     case '5':   // Oficina Correos
                         maxDate.setHours(18, 0, 0);
 
-                        if (sameDay)  // Antes de la hora límite      
+                        if (currentDate < maxDate)  // Antes de la hora límite      
                         {
                             shippingDays = 2;
+                            isBeforeMaxDate = true;
                         }
                         else          // Después de la hora límite
                         {
@@ -355,8 +360,10 @@
                     tomorrow = true;
                 }
 
-                maxDate = maxDate.getTime() + (count - 1) * addMillisecondsDay();
-
+                if (!isBeforeMaxDate) { // Si ya ha pasado la hora límite añadimos un día a la fecha máxima para pasar pedido. Se usa para calcular la cuenta atrás (countdown).
+                    maxDate = maxDate.getTime() + addMillisecondsDay();
+                }
+                
                 count = 0; // Resetea el contador a 0 por si hay que calcular varias fechas de entrega
 
                 return deliveryDateMillisec;
@@ -370,7 +377,7 @@
             function showRemainingTime() {
                 currentDate = new Date();   // Fecha actual
 
-                let minsLeft = Math.floor((maxDate - currentDate) / (60 * 1000)); // Minutos totales que hay entre la fecha límite y la fecha actual
+                let minsLeft = Math.floor((maxDate - currentDate) / (60 * 1000));     // Minutos totales que hay entre la fecha límite y la fecha actual
                 let hoursLeft = Math.floor(minsLeft / 60);                            // Horas restantes antes de el tiempo límite
                 minsLeft %= 60;                                                       // Minutos restantes antes de el tiempo límite, teniendo en cuenta las horas restantes
 
@@ -566,6 +573,16 @@
             }
         }
 
+        function changeStyleBlogFooter() {
+            $('.home_blog_post_area.displayFooterBefore').parents('.container').addClass('blog-footer')
+        }
+
+        function stickyAddToCart() { // TODO (Mirar Media markt mobile)
+        }
+
+        // NEXT function
+
+
         function serviceWorker() // Registrar service worker [NO SE ESTÁ USANDO ACTUALMENTE]
         {
             if ('serviceWorker' in navigator) {
@@ -577,10 +594,6 @@
                     });
                 });
             }
-        }
-
-        function changeStyleBlogFooter() {
-            $('.home_blog_post_area.displayFooterBefore').parents('.container').addClass('blog-footer')
         }
 
 

@@ -881,6 +881,13 @@ body#checkout section.checkout-step div.forgot-password {
     #header .header-nav .top-logo {
         max-width: 154px
     }
+
+    #product .product-actions .add-to-cart {
+        padding: 0.625rem 0.45rem 0.5rem;
+    }
+    .product-actions .add-to-cart .material-icons, .add-to-cart .loader {
+        margin-right: 0.3rem;
+    }
 }
 
 @media(max-width:767px) { 
