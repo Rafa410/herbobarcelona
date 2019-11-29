@@ -23,10 +23,6 @@
                 }
 
                 addToCartBtnEffects();
-
-                if (isMobile) {
-                    stickyAddToCart();
-                }
                 
                 break;
 
