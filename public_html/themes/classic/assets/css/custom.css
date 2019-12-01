@@ -850,15 +850,19 @@ body#checkout section.checkout-step div.forgot-password {
     margin-bottom: 2rem;
 }
 
-.cart-grid-right .promo-discounts .cart-summary-line .label {
+.cart-grid-right .promo-discounts .cart-summary-line .label, .block-promo .cart-summary-line .label {
     color: #363;
 }
-    .cart-grid-right .promo-discounts .cart-summary-line .label .code {
+    .cart-grid-right .promo-discounts .cart-summary-line .label .code, .block-promo .cart-summary-line .label .code {
         color: #47AC47;
         transition: color 0.3s;
     }
-        .cart-grid-right .promo-discounts .cart-summary-line .label .code:hover {
+        .cart-grid-right .promo-discounts .cart-summary-line .label .code:hover, .block-promo .cart-summary-line .label .code:hover {
             color: #B481C8;
+        }
+        .block-promo .cart-summary-line .label .code {
+            cursor: pointer;
+            text-decoration: underline;
         }
 
 .block-promo .promo-input + button {
@@ -871,6 +875,10 @@ body#checkout section.checkout-step div.forgot-password {
 
 .products-sort-order .select-list:hover {
     background-color: #47ac47;
+}
+
+.block-category {
+    min-height: unset;
 }
 
 @media(max-width:359px) {
