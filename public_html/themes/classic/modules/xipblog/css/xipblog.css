@@ -5,7 +5,6 @@
     -moz-box-sizing: border-box;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
-    -khtml-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
@@ -28,7 +27,6 @@
 
     .slick-list.dragging {
         cursor: pointer;
-        cursor: hand
     }
 
 .slick-slider .slick-track, .slick-slider .slick-list {
@@ -672,11 +670,12 @@
 /***** Custom css *****/
 
 .home_blog_post_area .xipblog_img {
-    filter: brightness(.7s);
+    filter: brightness(0.7);
     transition: filter 0.3s 0.1s ease-in-out;
 }
     .home_blog_post_area .xipblog_img:hover {
         filter: brightness(1);
+        transition-delay: 0s;
     }
 
 #module-xipblog-archive #main h1 {

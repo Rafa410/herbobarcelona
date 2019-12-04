@@ -81,15 +81,15 @@ a {
     color: #B481C8
 }
 
-#CountDown, .dateCountdown {
+#CountDown, #countdown , .dateCountdown {
     font-weight: 700
 }
 
-#CountDown {
+#CountDown, #countdown {
     color: #47AC47
 }
 
-.countdown, #cart p#loyalty {
+.countdown, .countdown-info , #cart p#loyalty {
     border: 1px solid #b481c866;
     padding: .5rem .2rem;
     border-radius: 15px 2px;
@@ -101,14 +101,24 @@ a {
     margin-bottom: 0
 }
 
-#cart .countdown {
+#cart .countdown, #cart .countdown-info {
     margin: .5rem
 }
 
-.avisoFB {
-    font-size: .7rem;
-    display: none
+.avisoFB, .holliday-message {
+    display: none;
 }
+.avisoFB {
+    font-size: 0.7em;
+    margin-bottom: 0.5rem;
+}
+.holliday-message { 
+    font-size: 0.8em;
+}
+    .holliday-message #holliday-name {
+        font-weight: bold;
+        color: #47ac47;
+    }
 
 .product-images > li.thumb-container > .thumb.selected {
     border-radius: 5px

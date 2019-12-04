@@ -4,6 +4,18 @@
 
         const isMobile = /Android|webOS|iPhone|iPad|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 
+        // Carrier ID (Cambiar cada vez que actualizamos los ajustes de un transportista)
+        const correosExpID = '138';
+        const correosEstID = '139';
+        const oficinaCorreosID = '150';
+        const feliuBcnID = '142';
+        const feliuCatID = '144';
+        const feliuEspID = '146';
+        const puntoRecogidaID = '149';
+
+        const distribudietID = '1';
+        const feliubadaloID = '2';
+
         if (prestashop.page.page_name != 'checkout') {
             stickyThings();
         }
@@ -41,7 +53,7 @@
                 loadingAnimation();
                 const carrier = document.querySelectorAll(".dateCountdown");
                 const carrierPrice = document.querySelectorAll(".carrier-price");
-                for (let i in carrier) {
+                for (let i = 0; i < carrier.length; i++) {
                     switch (carrier[i].id) {
                         case correosExpID:   // Correos Express
                             supplier = '1';
@@ -143,19 +155,6 @@
          */
         function countdown(supp, carrier = 0) {
 
-
-            // Carrier ID (Cambiar cada vez que actualizamos los ajustes de un transportista)
-            const correosExpID = '138';
-            const correosEstID = '139';
-            const oficinaCorreosID = '150';
-            const feliuBcnID = '142';
-            const feliuCatID = '144';
-            const feliuEspID = '146';
-            const puntoRecogidaID = '149';
-
-            const distribudietID = '1';
-            const feliubadaloID = '2';
-
             const countdownMsg = document.getElementById('countdown'); // Elemento HTML que contiene el mensaje del Countdown
 
             let currentDate = new Date();               // Fecha actual
@@ -163,15 +162,24 @@
             let shippingDays;                           // Número de días a añadir a la fecha actual hasta llegar a la fecha de entrega
             let today = false,                          // Booleanos que indican si el paquete se entrega hoy o mañana, para añadirlo al mensaje.
                 tomorrow = false;
-            let count = 0;                              // Contador para saber el nº de días que pasan desde la fecha actual y la fecha de entrega. Si es 1, today = TRUE, si es 2, tomorrow = TRUE.
             let isBeforeMaxDate = false;                // Booleano que indica si el pedido se prepara el mismo día o no, dependiendo de la hora límite (@maxDate).
 
-            const hollidays = [     // Lista con los días festivos
-                [1, 0],     // Año nuevo, 1 Ene.
-                [1, 4],     // Fiesta del trabajo, 1 May.
-                [12, 9],    // Fiesta Nacional España, 12 Oct.
-                [25, 11]    // Navidad, 25 Dic.
+            const hollidays = [     // Lista con los días festivos. El mes va de 0 (Enero) a 11 (Diciembre).
+              // Días fijos todos los años:
+                [1, 0, 'Año Nuevo'],
+                [6, 0, 'Epifanía del Señor'],
+                [1, 4, 'Fiesta del trabajo'],
+                [15, 7, 'Asunción de la Virgen'],
+                [12, 9, 'Fiesta Nacional de España'],
+                [1, 10, 'Todos los Santos'],
+                [6, 11, 'Día de la Constitución española'],
+                [8, 11, 'Immaculada Concepción'],
+                [25, 11, 'Navidad']
+
+              // Días variables:
+
             ];
+            let hollidaysInUse = []; // Lista con los días festivos que afectan a la fecha de entrega actual.
 
             const weekDay = [     // Array con los días de la semana para pasar de un número a string
                 "domingo",   // 0
@@ -204,15 +212,21 @@
             let deliveryDateMillisec = calculateDeliveryDate(shippingDays); // Fecha de entrega del pedido en milisegundos
             let deliveryDate = new Date(deliveryDateMillisec);              // Fecha de entrega del pedido en formato Date()
 
+            showDeliveryDate(); // Muestra por pantalla la fecha de entrega.
+
             if (prestashop.page.page_name != 'checkout') // Todas las páginas menos el checkout
             {
                 showRemainingTime();                       // Calcula el tiempo restante y lo muestra por pantalla una vez, para no tener que esperar los 30 segundos del intervalo.
                 setInterval(showRemainingTime(), 30000);   // Calcula el tiempo restante y lo muestra por pantalla cada 30 segundos.
 
-                showDeliveryDate(); // Muestra por pantalla la fecha de entrega.
+                if (hollidaysInUse.length != 0) {
+                    showHollidayMsg(); // Muestra por pantalla el mensaje de días festivos si es necesario.
+                }
             }
             else // Checkout
             {
+                console.log('checkout true, carrier: ' + carrier); // TEST
+
                 const dateCheckoutMsg = document.getElementsByClassName('dateCountdown')[carrier]; // Selecciona el elemento HTML correspondiente al transportista actual
                 if (dateCheckoutMsg.id == puntoRecogidaID)      // Si el transportista es Punto de recogida
                 {
@@ -236,8 +250,9 @@
                 * addMillisecondsDay() ==> Devuelve los milisegundos que hay en un día.
                 * showRemainingTime() ==> Calcula el tiempo restante para pasar el pedido y que se prepare el mismo día. Añade el resultado a un elemento HTML.
                 * showDeliveryDate() ==> Añade la fecha de entrega a un elemento HTML.
+                * showHollidayMsg() ==> Muestra un mensaje con los días festivos que afectan a la fecha de entrega.
                 * showCarrierInfoCheckout(HTML element, string, number) ==> Muestra información adicional en determinados transportistas en el checkout
-        
+
             **************************/
 
 
@@ -250,16 +265,19 @@
             function isHolliday(milliseconds) { // Devuelve TRUE si es un día festivo, FALSE si no lo es
 
                 const date = new Date(milliseconds);
-
-                for (let i in hollidays) // Recorre todas las fechas que hay en la matriz hollidays
-                {
-                    if ((date.getMonth() == hollidays[i][1]) && (date.getDate() == hollidays[i][0])) // Comprueba si coinciden el mes Y el día
+                const checkHolliday = (holliday) => { // Función que devuelve un booleano indicando si la fecha actual coincide con alguno de los días festivos.
+                    if ((date.getDate() == holliday[0]) && (date.getMonth() == holliday[1])) // Comprueba si coinciden el día (holliday[0]) Y el mes (holliday[1]).
                     {
+                        hollidaysInUse.push(holliday);  // Añade esta fecha a los días festivos en uso.
                         return true;
                     }
-                }
+                    else {
+                        return false;
+                    }
+                };
 
-                return false;
+                return hollidays.some(checkHolliday);
+
             }
 
 
@@ -269,6 +287,7 @@
 
                 switch (supp)   // Asigna el número de días 'shippingDays' en función del transportista y/o proveedor
                 {
+                    case '0': 
                     case distribudietID:   // Distribudiet - Correos Express
                         maxDate.setHours(16, 0, 0);
 
@@ -327,6 +346,7 @@
                         break;
 
                     default:
+                        maxDate.setHours(16, 0, 0);
                         shippingDays = 2;
                         break;
                 }
@@ -339,6 +359,7 @@
             */
             function calculateDeliveryDate(nDays) {
                 let deliveryDateMillisec = new Date().getTime();
+                let count = 0;  // Contador para saber el nº de días que pasan desde la fecha actual y la fecha de entrega. Si es 1, today = TRUE, si es 2, tomorrow = TRUE.
 
                 while (nDays > 0) {
                     deliveryDateMillisec += addMillisecondsDay();
@@ -393,16 +414,40 @@
 
                 if (today)          // Si el pedido se entrega hoy
                 {
-                    dateMsg.innerHTML = 'hoy, ' + day + ' ' + date + ' de ' + month + '.';
+                    dateMsg.innerHTML = ' hoy, ' + day + ' ' + date + ' de ' + month + '.';
                 }
                 else if (tomorrow)  // Si el pedido se entrega mañana
                 {
-                    dateMsg.innerHTML = 'mañana, ' + day + ' ' + date + ' de ' + month + '.';
+                    dateMsg.innerHTML = ' mañana, ' + day + ' ' + date + ' de ' + month + '.';
                 }
                 else                // Si no se entrega ni hoy ni mañana
                 {
-                    dateMsg.innerHTML = 'el ' + day + ', ' + date + ' de ' + month + '.';
+                    dateMsg.innerHTML = ' el ' + day + ', ' + date + ' de ' + month + '.';
                 }
+            }
+
+            function showHollidayMsg() {
+                const hollidayDate = document.getElementById('holliday-date');
+                const hollidayName = document.getElementById('holliday-name');
+                
+
+                hollidaysInUse.forEach( (holliday, index) => {
+
+                    if (index == 0) // Si es el primer día festivo
+                    {
+                        hollidayDate.innerHTML = holliday[0] + ' de ' + monthName[holliday[1]]; // @Dia de @Mes TODO: Poner nombre del mes en vez de numero
+                        hollidayName.innerHTML = holliday[2]; // @NombreDiaFestivo
+                    }
+                    else // Si hay más de un día festivo que afecta a la fecha de entrega actual
+                    {
+                        const dateHTML = '<b id="holliday-date">' + holliday[0] + 'de' + monthName[holliday[1]] + '</b>'; // String con la fecha del día festivo ( @Dia de @Mes ) en formato HTML.
+                        const nameHTML = '<i id="holliday-name">' + holliday[2] + '</i>'; // String con el nombre del día festivo en formato HTML.
+
+                        hollidayName.outerHTML += ' y el ' + dateHTML + ' es ' + nameHTML; // Añade otro día festivo al lado del anterior festivo.
+                    }
+
+                });
+
             }
 
             function showCarrierInfoCheckout(currentMsg, additionalInfo, carrierID) {
