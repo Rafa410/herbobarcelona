@@ -225,8 +225,6 @@
             }
             else // Checkout
             {
-                console.log('checkout true, carrier: ' + carrier); // TEST
-
                 const dateCheckoutMsg = document.getElementsByClassName('dateCountdown')[carrier]; // Selecciona el elemento HTML correspondiente al transportista actual
                 if (dateCheckoutMsg.id == puntoRecogidaID)      // Si el transportista es Punto de recogida
                 {
@@ -351,6 +349,10 @@
                         break;
                 }
 
+                if ( isWeekend(currentDate.getTime()) || isHolliday(currentDate.getTime()) ) {
+                    isBeforeMaxDate = false;
+                }
+
                 return shippingDays;
             }
 
@@ -361,12 +363,23 @@
                 let deliveryDateMillisec = new Date().getTime();
                 let count = 0;  // Contador para saber el nº de días que pasan desde la fecha actual y la fecha de entrega. Si es 1, today = TRUE, si es 2, tomorrow = TRUE.
 
+                maxDate = maxDate.getTime(); // Fecha limite en milisegundos
+                if (!isBeforeMaxDate) { // Si ya ha pasado la hora límite añadimos un día a la fecha máxima para pasar pedido. Se usa para calcular la cuenta atrás (countdown).
+                    maxDate += addMillisecondsDay();
+                }
+
                 while (nDays > 0) {
                     deliveryDateMillisec += addMillisecondsDay();
 
-                    if (!(isWeekend(deliveryDateMillisec)) && !(isHolliday(deliveryDateMillisec))) {
+                    if ((isWeekend(deliveryDateMillisec)) || (isHolliday(deliveryDateMillisec))) {
+                        if (!isBeforeMaxDate) {
+                            maxDate += addMillisecondsDay();
+                        }
+                    }
+                    else {
                         nDays--;
                     }
+
                     count++;
                 }
 
@@ -376,12 +389,7 @@
                 else if (count == 1) {
                     tomorrow = true;
                 }
-
-                if (!isBeforeMaxDate) { // Si ya ha pasado la hora límite añadimos un día a la fecha máxima para pasar pedido. Se usa para calcular la cuenta atrás (countdown).
-                    maxDate = maxDate.getTime() + addMillisecondsDay();
-                }
                 
-                count = 0; // Resetea el contador a 0 por si hay que calcular varias fechas de entrega
 
                 return deliveryDateMillisec;
             }
@@ -435,7 +443,7 @@
 
                     if (index == 0) // Si es el primer día festivo
                     {
-                        hollidayDate.innerHTML = holliday[0] + ' de ' + monthName[holliday[1]]; // @Dia de @Mes TODO: Poner nombre del mes en vez de numero
+                        hollidayDate.innerHTML = holliday[0] + ' de ' + monthName[holliday[1]]; // @Dia de @Mes
                         hollidayName.innerHTML = holliday[2]; // @NombreDiaFestivo
                     }
                     else // Si hay más de un día festivo que afecta a la fecha de entrega actual
