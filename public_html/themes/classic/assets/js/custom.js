@@ -217,7 +217,7 @@
             if (prestashop.page.page_name != 'checkout') // Todas las páginas menos el checkout
             {
                 showRemainingTime();                       // Calcula el tiempo restante y lo muestra por pantalla una vez, para no tener que esperar los 30 segundos del intervalo.
-                setInterval(showRemainingTime(), 30000);   // Calcula el tiempo restante y lo muestra por pantalla cada 30 segundos.
+                setInterval(showRemainingTime, 30000);   // Calcula el tiempo restante y lo muestra por pantalla cada 30 segundos.
 
                 if (hollidaysInUse.length != 0) {
                     showHollidayMsg(); // Muestra por pantalla el mensaje de días festivos si es necesario.
@@ -287,7 +287,7 @@
                 {
                     case '0': 
                     case distribudietID:   // Distribudiet - Correos Express
-                        maxDate.setHours(16, 0, 0);
+                        maxDate.setHours(14, 0, 0);
 
                         if (currentDate < maxDate) { // Antes de la hora límite
                             shippingDays = 1;
@@ -344,7 +344,7 @@
                         break;
 
                     default:
-                        maxDate.setHours(16, 0, 0);
+                        maxDate.setHours(14, 0, 0);
                         shippingDays = 2;
                         break;
                 }
@@ -364,15 +364,19 @@
                 let count = 0;  // Contador para saber el nº de días que pasan desde la fecha actual y la fecha de entrega. Si es 1, today = TRUE, si es 2, tomorrow = TRUE.
 
                 maxDate = maxDate.getTime(); // Fecha limite en milisegundos
+
                 if (!isBeforeMaxDate) { // Si ya ha pasado la hora límite añadimos un día a la fecha máxima para pasar pedido. Se usa para calcular la cuenta atrás (countdown).
                     maxDate += addMillisecondsDay();
                 }
 
                 while (nDays > 0) {
+
                     deliveryDateMillisec += addMillisecondsDay();
 
-                    if ((isWeekend(deliveryDateMillisec)) || (isHolliday(deliveryDateMillisec))) {
-                        if (!isBeforeMaxDate) {
+                    if ((isWeekend(deliveryDateMillisec)) || (isHolliday(deliveryDateMillisec))) { // Comprueba si la fecha de entrega es fin de semana o festivo
+
+                        if ((isWeekend(maxDate)) || (isHolliday(maxDate))) {  // Comprueba si la fecha máxima para pasar el pedido es fin de semana o festivo
+
                             maxDate += addMillisecondsDay();
                         }
                     }
@@ -455,6 +459,8 @@
                     }
 
                 });
+
+                document.getElementsByClassName('holliday-message')[0].style.display = 'block';
 
             }
 

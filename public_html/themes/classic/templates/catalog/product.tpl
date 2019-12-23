@@ -116,7 +116,7 @@
                   {/block}
 
                 {if ($product.availability == 'available') || ($product.availability == 'last_remaining_items')}
-                    <div class="countdown"><span>C&oacute;mpralo antes de </span><span id="CountDown"></span><span> y recibe tu pedido </span><span class="dateCountdown"></span></div>
+                    <div class="countdown"><span>C&oacute;mpralo antes de </span><span id="countdown"></span><span> y recibe tu pedido </span><span class="dateCountdown"></span></div>
                     <p class="avisoFB">* Entregas el mismo día solo en Barcelona</p>
 					<p class="holliday-message">* Para calcular la fecha prevista de entrega hemos tenido en cuenta que el <b id="holliday-date"></b> es <i id="holliday-name"></i>.</p>
                 {/if}
