@@ -291,7 +291,7 @@
 
                         if (currentDate < maxDate) { // Antes de la hora límite
                             shippingDays = 1;
-                            isBeforeMaxDate = true;
+                            isBeforeMaxDate = true; // TODO: Comprobar si es fin de semana
                         }
                         else                        // Después de la hora límite
                         {
@@ -350,6 +350,7 @@
                 }
 
                 if ( isWeekend(currentDate.getTime()) || isHolliday(currentDate.getTime()) ) {
+                    shippingDays--;
                     isBeforeMaxDate = false;
                 }
 
@@ -371,12 +372,9 @@
 
                 while (nDays > 0) {
 
-                    deliveryDateMillisec += addMillisecondsDay();
-
                     if ((isWeekend(deliveryDateMillisec)) || (isHolliday(deliveryDateMillisec))) { // Comprueba si la fecha de entrega es fin de semana o festivo
 
                         if ((isWeekend(maxDate)) || (isHolliday(maxDate))) {  // Comprueba si la fecha máxima para pasar el pedido es fin de semana o festivo
-
                             maxDate += addMillisecondsDay();
                         }
                     }
@@ -384,7 +382,15 @@
                         nDays--;
                     }
 
+                    deliveryDateMillisec += addMillisecondsDay();
+
+                    if ((nDays == 0) && ((isWeekend(deliveryDateMillisec)) || (isHolliday(deliveryDateMillisec)))) {
+                        deliveryDateMillisec += addMillisecondsDay();
+                        nDays++;
+                    }
+
                     count++;
+
                 }
 
                 if (count == 0) {
@@ -393,7 +399,6 @@
                 else if (count == 1) {
                     tomorrow = true;
                 }
-                
 
                 return deliveryDateMillisec;
             }
