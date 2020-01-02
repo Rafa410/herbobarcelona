@@ -167,7 +167,7 @@
             const hollidays = [     // Lista con los días festivos. El mes va de 0 (Enero) a 11 (Diciembre).
               // Días fijos todos los años:
                 [1, 0, 'Año Nuevo'],
-                [6, 0, 'Epifanía del Señor'],
+                [6, 0, 'Reyes Magos'], // Epifanía del Señor
                 [1, 4, 'Fiesta del trabajo'],
                 [15, 7, 'Asunción de la Virgen'],
                 [12, 9, 'Fiesta Nacional de España'],
@@ -233,7 +233,7 @@
                 }
                 else if (dateCheckoutMsg.id == oficinaCorreosID) // Si el transportista es Oficina de Correos
                 {
-                    let additionalMsg = '<p style="margin-top: 0.3rem;"><a href="#" id="btn-toggle-info_' + dateCheckoutMsg.id + '"><i class="material-icons add">add_circle</i><i class="material-icons remove" style="display:none;">remove_circle</i> Información</a></p><p id="more-info_' + dateCheckoutMsg.id + '">Por defecto, se enviará tu pedido a la oficina de Correos más cercana a la dirección introducida en el paso anterior. Puedes añadir un comentario al pedido si prefieres que lo enviemos a otra oficina.</p>';
+                    let additionalMsg = '<p style="margin-top: 0.3rem;"><a href="#" id="btn-toggle-info_' + dateCheckoutMsg.id + '"><i class="material-icons add">add_circle</i><i class="material-icons remove" style="display:none;">remove_circle</i> Información</a></p><p id="more-info_' + dateCheckoutMsg.id + '">Por defecto, se enviará tu pedido a la <a href="https://www.correos.es/ss/Satellite/site/aplicacion-1349167812848-herramientas_y_apps/detalle_app-sidioma=es_ES" rel="noopener noreferrer" target="_blank">Oficina de Correos</a> más cercana a la dirección introducida en el paso anterior. Puedes añadir un comentario al pedido si prefieres que lo enviemos a otra oficina.</p>';
                     showCarrierInfoCheckout(dateCheckoutMsg, additionalMsg, dateCheckoutMsg.id);
                 }
             }
@@ -266,6 +266,12 @@
                 const checkHolliday = (holliday) => { // Función que devuelve un booleano indicando si la fecha actual coincide con alguno de los días festivos.
                     if ((date.getDate() == holliday[0]) && (date.getMonth() == holliday[1])) // Comprueba si coinciden el día (holliday[0]) Y el mes (holliday[1]).
                     {
+                        for (let i = 0; i < hollidaysInUse.length; i++) {
+                            if ((hollidaysInUse[i][0] == holliday[0]) && (hollidaysInUse[i][1] == holliday[1])) { // Comprueba que no haya sido añadido anteriormente este festivo
+                                console.log('holliday already checked'); // TEST
+                                return true;
+                            }
+                        }
                         hollidaysInUse.push(holliday);  // Añade esta fecha a los días festivos en uso.
                         return true;
                     }
@@ -363,6 +369,7 @@
             function calculateDeliveryDate(nDays) {
                 let deliveryDateMillisec = new Date().getTime();
                 let count = 0;  // Contador para saber el nº de días que pasan desde la fecha actual y la fecha de entrega. Si es 1, today = TRUE, si es 2, tomorrow = TRUE.
+                let lastDay; // Booleano para saber si hay que añadir más días a la fecha de entrega o si es el último día
 
                 maxDate = maxDate.getTime(); // Fecha limite en milisegundos
 
@@ -370,10 +377,14 @@
                     maxDate += addMillisecondsDay();
                 }
 
-                while (nDays > 0) {
+                while (nDays > 0) { // TODO: Cuando nDays==0 y es festivo se añade un día de más
+
+                    // console.log('count begining while: ' + count); // TEST
+                    // console.log('nDays begining while: ' + nDays); // TEST
 
                     if ((isWeekend(deliveryDateMillisec)) || (isHolliday(deliveryDateMillisec))) { // Comprueba si la fecha de entrega es fin de semana o festivo
 
+                        // console.log('deliveryDate is weekend OR isHolliday: TRUE : ' + new Date(deliveryDateMillisec)); // TEST
                         if ((isWeekend(maxDate)) || (isHolliday(maxDate))) {  // Comprueba si la fecha máxima para pasar el pedido es fin de semana o festivo
                             maxDate += addMillisecondsDay();
                         }
@@ -382,14 +393,31 @@
                         nDays--;
                     }
 
-                    deliveryDateMillisec += addMillisecondsDay();
-
-                    if ((nDays == 0) && ((isWeekend(deliveryDateMillisec)) || (isHolliday(deliveryDateMillisec)))) {
+                    if (lastDay) {
+                        nDays--;
+                    }
+                    else {
                         deliveryDateMillisec += addMillisecondsDay();
-                        nDays++;
+                        count++;
                     }
 
-                    count++;
+                    if ((nDays == 0) && ((isWeekend(deliveryDateMillisec)) || (isHolliday(deliveryDateMillisec)))) {
+
+                        // console.log('nDays=0 & deliveryDate is weekend OR isHolliday: TRUE : ' + new Date(deliveryDateMillisec)); // TEST
+                        deliveryDateMillisec += addMillisecondsDay();
+                        lastDay = true;
+                        // console.log('lastDay : true ' + new Date(deliveryDateMillisec)); // TEST
+                        nDays++;
+                        count++;
+                    }
+                    else {
+                        lastDay = false;
+                    }
+
+                    // console.log('lastDay = ' + lastDay); // TEST
+                    // console.log('DeliveryDate: ' + new Date(deliveryDateMillisec)); // TEST
+                    // console.log('count end  while: ' + count); // TEST
+                    // console.log('nDays end while: ' + nDays); // TEST
 
                 }
 
@@ -457,7 +485,7 @@
                     }
                     else // Si hay más de un día festivo que afecta a la fecha de entrega actual
                     {
-                        const dateHTML = '<b id="holliday-date">' + holliday[0] + 'de' + monthName[holliday[1]] + '</b>'; // String con la fecha del día festivo ( @Dia de @Mes ) en formato HTML.
+                        const dateHTML = '<b id="holliday-date">' + holliday[0] + ' de ' + monthName[holliday[1]] + '</b>'; // String con la fecha del día festivo ( @Dia de @Mes ) en formato HTML.
                         const nameHTML = '<i id="holliday-name">' + holliday[2] + '</i>'; // String con el nombre del día festivo en formato HTML.
 
                         hollidayName.outerHTML += ' y el ' + dateHTML + ' es ' + nameHTML; // Añade otro día festivo al lado del anterior festivo.
