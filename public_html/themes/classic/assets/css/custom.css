@@ -335,8 +335,12 @@ a {
 }
 
 .sobre-nosotros {
-    background: url(/img/cms/campo-lavanda-md.jpg) center center no-repeat !important;
-    background-size: cover !important
+    background: url(/img/cms/campo-lavanda-md.jpg) fixed center no-repeat !important;
+    background-size: cover !important;
+    padding-bottom: 5rem;
+}
+.sobre-nosotros .page-cms {
+    border-radius: 15px;
 }
 
 #pagenotfound .page-not-found span {
@@ -376,7 +380,7 @@ a {
 
 .avatar {
     border-radius: 10px;
-    box-shadow: 0 0 3px 1px #47ac47;
+    box-shadow: 0 0px 30px -8px rgba(71, 172, 71,0.9);
     display: block;
     margin: auto
 }
@@ -890,6 +894,19 @@ body#checkout section.checkout-step div.forgot-password {
 .block-category {
     min-height: unset;
 }
+
+.page-addresses .address, .page-authentication #content {
+    box-shadow: 0 3px 30px -10px rgba(0,0,0,0.5);
+}
+
+#search_popup {
+    border-radius: 15px;
+    box-shadow: 0 20px 80px -3px rgba(0,0,0,0.5);
+}
+    #search_popup .wrap_item {
+        overflow: auto;
+        max-height: calc(100vh - 125px);
+    }
 
 @media(max-width:359px) {
     #header .header-nav .top-logo a img {

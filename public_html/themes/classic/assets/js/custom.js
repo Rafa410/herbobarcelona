@@ -12,6 +12,7 @@
         const feliuCatID = '144';
         const feliuEspID = '146';
         const puntoRecogidaID = '149';
+        const correosExpIntID = '169';
 
         const distribudietID = '1';
         const feliubadaloID = '2';
@@ -124,6 +125,9 @@
                         case puntoRecogidaID:   // Punto de recogida en oficina Barcelona
                             supplier = '6';
                             break;
+                        case correosExpIntID:   // Correos Express Internacional
+                            supplier = '7';
+                            break;
                         default:
                             supplier = '4';
                             break;
@@ -228,12 +232,12 @@
                 const dateCheckoutMsg = document.getElementsByClassName('dateCountdown')[carrier]; // Selecciona el elemento HTML correspondiente al transportista actual
                 if (dateCheckoutMsg.id == puntoRecogidaID)      // Si el transportista es Punto de recogida
                 {
-                    let additionalMsg = '<p style="margin-top: 0.3rem;"><a href="#" id="btn-toggle-info_' + dateCheckoutMsg.id + '"><i class="material-icons add">add_circle</i><i class="material-icons remove" style="display:none;">remove_circle</i> Información</a></p><p id="more-info_' + dateCheckoutMsg.id + '">Recibirás un correo cuando tu pedido esté listo para su recogida en <a href="https://goo.gl/maps/oSXTrW7uB7rRcEBf8" target="_blank" rel="nofollow noopener noreferrer">Calle Putget 78, 1º A, 08023 Barcelona</a>.</p>';
+                    let additionalMsg = '<p style="margin-top: 0.3rem;"><a href="#" id="btn-toggle-info_' + dateCheckoutMsg.id + '"><i class="material-icons add">add_circle</i><i class="material-icons remove" style="display:none;">remove_circle</i> Información</a></p><p id="more-info_' + dateCheckoutMsg.id + '">Recibirás un correo cuando tu pedido esté listo para su recogida en <a href="https://goo.gl/maps/oSXTrW7uB7rRcEBf8" target="_blank" rel="nofollow noopener noreferrer">Calle Putget 78, 08023 Barcelona</a>.</p>';
                     showCarrierInfoCheckout(dateCheckoutMsg, additionalMsg, dateCheckoutMsg.id);
                 }
                 else if (dateCheckoutMsg.id == oficinaCorreosID) // Si el transportista es Oficina de Correos
                 {
-                    let additionalMsg = '<p style="margin-top: 0.3rem;"><a href="#" id="btn-toggle-info_' + dateCheckoutMsg.id + '"><i class="material-icons add">add_circle</i><i class="material-icons remove" style="display:none;">remove_circle</i> Información</a></p><p id="more-info_' + dateCheckoutMsg.id + '">Por defecto, se enviará tu pedido a la <a href="https://www.correos.es/ss/Satellite/site/aplicacion-1349167812848-herramientas_y_apps/detalle_app-sidioma=es_ES" rel="noopener noreferrer" target="_blank">Oficina de Correos</a> más cercana a la dirección introducida en el paso anterior. Puedes añadir un comentario al pedido si prefieres que lo enviemos a otra oficina.</p>';
+                    let additionalMsg = '<p style="margin-top: 0.3rem;"><a href="#" id="btn-toggle-info_' + dateCheckoutMsg.id + '"><i class="material-icons add">add_circle</i><i class="material-icons remove" style="display:none;">remove_circle</i> Información</a></p><p id="more-info_' + dateCheckoutMsg.id + '">Por defecto, se enviará tu pedido a la <a href="https://www.correos.es/ss/Satellite/site/aplicacion-1349167812848-herramientas_y_apps/detalle_app-sidioma=es_ES" rel="noopener noreferrer" target="_blank">Oficina de Correos</a> más cercana a la dirección introducida en el paso anterior. Puedes añadir un comentario al pedido si prefieres que lo enviemos a una oficina específica.</p>';
                     showCarrierInfoCheckout(dateCheckoutMsg, additionalMsg, dateCheckoutMsg.id);
                 }
             }
@@ -348,7 +352,7 @@
                         }
 
                         break;
-
+                    case '7': // TODO
                     default:
                         maxDate.setHours(14, 0, 0);
                         shippingDays = 2;
@@ -356,7 +360,6 @@
                 }
 
                 if ( isWeekend(currentDate.getTime()) || isHolliday(currentDate.getTime()) ) {
-                    shippingDays--;
                     isBeforeMaxDate = false;
                 }
 
