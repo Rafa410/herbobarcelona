@@ -716,3 +716,49 @@
     margin-bottom: 0.1em;
     font-style: italic;
 }
+
+.rating {
+    text-align: center;
+    margin-bottom: 2rem;
+    --star-color-right: #a7a7a7;
+    --star-color-left: #ffb100;
+}
+    .rating .stars {
+        display: inline-block;
+    }
+        .stars span {
+            padding: 5px;
+            cursor: pointer;
+        }   
+        .stars span svg {
+            fill: #a7a7a7;
+            border-radius: 50%;
+            box-shadow: 0 5px 10px -5px;
+            transition: fill 0.3s 0.1s ease-in-out;
+        }
+        .stars span svg.selected {
+            fill: #ffb100;
+        }
+        .stars:hover > span svg {
+            fill: #47ac47;
+            transition-delay: 0s;
+            --star-color-right: #47ac47;
+            --star-color-left: #47ac47;
+         }
+         .stars > span:hover ~ span svg {
+             fill: #a7a7a7;
+             transition-delay: 0s;
+             --star-color-left: #a7a7a7;
+             --star-color-right: #a7a7a7;
+         }
+
+    .rating p {
+        color: #808080;
+        font-size: 12px;
+    }
+    .rating .rating-message {
+        display: none;
+        margin-top: 0.5rem;
+        font-size: 14px;
+    }
+    
