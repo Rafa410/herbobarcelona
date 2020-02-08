@@ -1,3 +1,7 @@
+a {
+    transition: color 0.3s;
+}
+
 #header .header-top a[data-depth="0"] {
     position: relative
 }
@@ -36,12 +40,13 @@
         position: relative;
         left: -3px;
         opacity: 0;
-        transition: all 0.4s;
+        transition: all 0.4s 0.1s;
     }
 
     .top-menu a[data-depth="2"]:hover:before, .footer-container li a:hover:before {
         opacity: 1;
         left: 8px;
+        transition-delay: 0s;
     }
 
 .footer-container li a:before {
@@ -50,7 +55,8 @@
 }
 
 .footer-container li a:hover:before {
-    left: 2px
+    left: 2px;
+    transition-delay: 0s;
 }
 
 .block-categories .category-sub-menu li:not([data-depth="0"]):not([data-depth="1"]):before {
@@ -75,15 +81,15 @@
     color: #B481C8
 }
 
-#CountDown, .dateCountdown {
+#CountDown, #countdown , .dateCountdown {
     font-weight: 700
 }
 
-#CountDown {
+#CountDown, #countdown {
     color: #47AC47
 }
 
-.countdown, #cart p#loyalty {
+.countdown, .countdown-info , #cart p#loyalty {
     border: 1px solid #b481c866;
     padding: .5rem .2rem;
     border-radius: 15px 2px;
@@ -95,14 +101,24 @@
     margin-bottom: 0
 }
 
-#cart .countdown {
+#cart .countdown, #cart .countdown-info {
     margin: .5rem
 }
 
-.avisoFB {
-    font-size: .7rem;
-    display: none
+.avisoFB, .holliday-message {
+    display: none;
 }
+.avisoFB {
+    font-size: 0.7em;
+    margin-bottom: 0.5rem;
+}
+.holliday-message { 
+    font-size: 0.8em;
+}
+    .holliday-message #holliday-name {
+        font-weight: bold;
+        color: #47ac47;
+    }
 
 .product-images > li.thumb-container > .thumb.selected {
     border-radius: 5px
@@ -118,18 +134,6 @@
 
 #wrapper .breadcrumb li a:hover {
     color: #47AC47
-}
-
-#menu-icon .remove {
-    display: none
-}
-
-#menu-icon .collapse-icons[aria-expanded=true] .remove {
-    display: inline-block
-}
-
-#menu-icon .collapse-icons[aria-expanded=true] .add {
-    display: none
 }
 
 #header .header-nav #search-icon .material-icons {
@@ -175,12 +179,12 @@
 .block-social li {
     padding: 1.43rem;
     border-radius: 50%;
-    background-position: center
+    background-position: center;
+    transition: transform 0.3s
 }
 
     .block-social li:hover {
         transform: scale(1.1);
-        transition: transform 0.3s
     }
 
     .block-social li.facebook {
@@ -331,8 +335,12 @@
 }
 
 .sobre-nosotros {
-    background: url(/img/cms/campo-lavanda-md.jpg) center center no-repeat !important;
-    background-size: cover !important
+    background: url(/img/cms/campo-lavanda-md.jpg) fixed center no-repeat !important;
+    background-size: cover !important;
+    padding-bottom: 5rem;
+}
+.sobre-nosotros .page-cms {
+    border-radius: 15px;
 }
 
 #pagenotfound .page-not-found span {
@@ -372,7 +380,7 @@
 
 .avatar {
     border-radius: 10px;
-    box-shadow: 0 0 3px 1px #47ac47;
+    box-shadow: 0 0px 30px -8px rgba(71, 172, 71,0.9);
     display: block;
     margin: auto
 }
@@ -814,6 +822,9 @@ a[id^="btn-toggle-info"] i {
 body#checkout section.checkout-step div.forgot-password {
     margin-left: 0;
 }
+#checkout .delivery-option img {
+    max-width: 100%;
+}
 
 .wishlistLinkTop .product_image {
     margin: 0.5rem 0;
@@ -853,6 +864,53 @@ body#checkout section.checkout-step div.forgot-password {
     margin-bottom: 2rem;
 }
 
+.cart-grid-right .promo-discounts .cart-summary-line .label, .block-promo .cart-summary-line .label {
+    color: #363;
+}
+    .cart-grid-right .promo-discounts .cart-summary-line .label .code, .block-promo .cart-summary-line .label .code {
+        color: #47AC47;
+        transition: color 0.3s;
+    }
+        .cart-grid-right .promo-discounts .cart-summary-line .label .code:hover, .block-promo .cart-summary-line .label .code:hover {
+            color: #B481C8;
+        }
+        .block-promo .cart-summary-line .label .code {
+            cursor: pointer;
+            text-decoration: underline;
+        }
+
+.block-promo .promo-input + button {
+    box-shadow: 0 0 5px 0px #363;
+    transition: box-shadow 0.3s ease;
+}
+    .block-promo .promo-input + button:hover {
+        box-shadow: 0 0 10px 0px #47ac47;
+    }
+
+.products-sort-order .select-list:hover {
+    background-color: #47ac47;
+}
+
+.block-category {
+    min-height: unset;
+}
+
+.page-addresses .address, .page-authentication #content {
+    box-shadow: 0 3px 30px -10px rgba(0,0,0,0.5);
+}
+
+#search_popup {
+    border-radius: 15px;
+    box-shadow: 0 20px 80px -3px rgba(0,0,0,0.5);
+}
+    #search_popup .wrap_item {
+        overflow: auto;
+        max-height: calc(100vh - 125px);
+    }
+    
+
+        
+
 @media(max-width:359px) {
     #header .header-nav .top-logo a img {
         max-width: 86%
@@ -860,6 +918,13 @@ body#checkout section.checkout-step div.forgot-password {
 
     #header .header-nav .top-logo {
         max-width: 154px
+    }
+
+    #product .product-actions .add-to-cart {
+        padding: 0.625rem 0.45rem 0.5rem;
+    }
+    .product-actions .add-to-cart .material-icons, .add-to-cart .loader {
+        margin-right: 0.3rem;
     }
 }
 
@@ -942,6 +1007,61 @@ body#checkout section.checkout-step div.forgot-password {
     #cart .blockreassurance_product {
         margin-bottom: 2rem;
     }
+
+    /* Menu button - Toggle effect */
+
+    #menu-icon {
+        margin: 0 0.3rem 0 0.8rem;
+    }
+        #menu-icon .collapse-icons {
+            display: block;
+            position: relative;
+            width: 1.5rem;
+            height: 32px;
+            margin-top: 18px;
+            transform: rotate(0deg);
+            transition: 0.5s ease-in-out;
+        }
+            #menu-icon .collapse-icons span {
+                display: block;
+                position: absolute;
+                height: 2px;
+                width: 100%;
+                left: 0;
+                background-color: #232323;
+                border-radius: 9px;
+                opacity: 1;
+                transform: rotate(0deg);
+                transition: 0.3s ease-in-out;
+            }
+            #menu-icon .collapse-icons span:nth-child(1) {
+                top: 0;
+            }
+            #menu-icon .collapse-icons span:nth-child(2), #menu-icon .collapse-icons span:nth-child(3) {
+                top: 6px;
+            }
+            #menu-icon .collapse-icons span:nth-child(4) {
+                top: 12px;
+            }
+            #menu-icon .collapse-icons[aria-expanded=true] span:nth-child(1) {
+                top: 6px;
+                width: 0%;
+                left: 50%;
+            }
+            #menu-icon .collapse-icons[aria-expanded=true] span:nth-child(2) {
+                transform: rotate(45deg);
+            }
+            #menu-icon .collapse-icons[aria-expanded=true] span:nth-child(3) {
+                transform: rotate(-45deg);
+            }
+            #menu-icon .collapse-icons[aria-expanded=true] span:nth-child(4) {
+                top: 6px;
+                width: 0%;
+                left: 50%;
+            }
+
+    /* END Menu button */
+
 }
 
 @media(max-width:991px) {
