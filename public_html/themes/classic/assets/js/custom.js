@@ -294,14 +294,10 @@
                     case '0': 
                     case distribudietID:   // Distribudiet - Correos Express
                         maxDate.setHours(14, 0, 0);
+                        shippingDays = 1;
 
                         if (currentDate < maxDate) { // Antes de la hora limite
-                            shippingDays = 1;
-                            isBeforeMaxDate = true; // TODO: Comprobar si es fin de semana
-                        }
-                        else                        // Despues de la hora limite
-                        {
-                            shippingDays = 2;
+                            isBeforeMaxDate = true;
                         }
 
                         break;
@@ -309,26 +305,20 @@
                     case feliubadaloID:  // Feliubadalo BCN
                     case '6':            // Punto de recogida oficina Barcelona
                         maxDate.setHours(12, 30, 0);
+                        shippingDays = 0;
 
                         if (currentDate < maxDate) {
-                            shippingDays = 0;
                             isBeforeMaxDate = true;
-                        }
-                        else {
-                            shippingDays = 1;
                         }
 
                         break;
 
                     case '3':    // Feliubadalo CAT
                         maxDate.setHours(18, 0, 0);
+                        shippingDays = 1;
 
                         if (currentDate < maxDate) {
-                            shippingDays = 1;
                             isBeforeMaxDate = true;
-                        }
-                        else {
-                            shippingDays = 2;
                         }
 
                         break;
@@ -336,15 +326,11 @@
                     case '4':   // Correos Estandar
                     case '5':   // Oficina Correos
                         maxDate.setHours(17, 30, 0);
+                        shippingDays = 2;
 
                         if (currentDate < maxDate)  // Antes de la hora limite      
                         {
-                            shippingDays = 2;
                             isBeforeMaxDate = true;
-                        }
-                        else          // Despues de la hora limite
-                        {
-                            shippingDays = 3;
                         }
 
                         break;
@@ -355,7 +341,7 @@
                         break;
                 }
 
-                if ( isWeekend(currentDate.getTime()) || isHolliday(currentDate.getTime()) ) {
+                if ( (isBeforeMaxDate) &&  (isWeekend(currentDate.getTime()) || isHolliday(currentDate.getTime())) ) {
                     isBeforeMaxDate = false;
                 }
 
@@ -374,7 +360,15 @@
 
                 if (!isBeforeMaxDate) { // Si ya ha pasado la hora limite añadimos un dia a la fecha maxima para pasar pedido. Se usa para calcular la cuenta atras (countdown).
                     maxDate += addMillisecondsDay();
+                    deliveryDateMillisec += addMillisecondsDay();
+                    count++;
                 }
+
+                // console.log('DeliveryDate BEFORE while: ' + new Date(deliveryDateMillisec)); // TEST
+                // console.log('Max date BEFORE while: ' + new Date(maxDate)); // TEST
+                // console.log('count BEFORE  while: ' + count); // TEST
+                // console.log('nDays BEFORE while: ' + nDays); // TEST
+                // console.log('------------ BEGINING WHILE -----------'); // TEST
 
                 while (nDays > 0) { // TODO: Cuando nDays==0 y es festivo se añade un dia de mas
 
@@ -384,6 +378,7 @@
                     if ((isWeekend(deliveryDateMillisec)) || (isHolliday(deliveryDateMillisec))) { // Comprueba si la fecha de entrega es fin de semana o festivo
 
                         // console.log('deliveryDate is weekend OR isHolliday: TRUE : ' + new Date(deliveryDateMillisec)); // TEST
+
                         if ((isWeekend(maxDate)) || (isHolliday(maxDate))) {  // Comprueba si la fecha maxima para pasar el pedido es fin de semana o festivo
                             maxDate += addMillisecondsDay();
                         }
@@ -403,9 +398,12 @@
                     if ((nDays == 0) && ((isWeekend(deliveryDateMillisec)) || (isHolliday(deliveryDateMillisec)))) {
 
                         // console.log('nDays == 0 AND deliveryDate isWeekend OR isHolliday : ' + new Date(deliveryDateMillisec)); // TEST
+                        
                         deliveryDateMillisec += addMillisecondsDay();
                         lastDay = true;
+                        
                         // console.log('lastDay = TRUE ' + new Date(deliveryDateMillisec)); // TEST
+                        
                         nDays++;
                         count++;
                     }
