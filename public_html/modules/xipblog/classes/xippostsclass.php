@@ -509,7 +509,16 @@ class xippostsclass extends ObjectModel
           				$results[$i]['post_author_arr']['lastname'] = $post_author_arr->lastname;
           				$results[$i]['post_author_arr']['firstname'] = $post_author_arr->firstname;
           			}
-          			$results[$i]['link'] = xipblog::XipBlogPostLink(array('id'=>$qlvalue['id_xipposts'],'rewrite'=>$qlvalue['link_rewrite'],'page_type'=>$post_type));
+					// $results[$i]['link'] = xipblog::XipBlogPostLink(array('id'=>$qlvalue['id_xipposts'],'rewrite'=>$qlvalue['link_rewrite'],'page_type'=>$post_type));
+					$params = array(
+						'id' => $qlvalue['id_xipposts'],
+						'rewrite' => $qlvalue['link_rewrite']
+					);
+					if ($post_type != 'post') {
+						$params['page_type'] = $post_type;
+					}
+					$results[$i]['link'] = xipblog::XipBlogPostLink($params);
+
           			$results[$i]['post_tags'] = self::GetPostTagsResults($qlvalue['id_xipposts'],"tag");
           			if(isset($qlvalue['audio']) && !empty($qlvalue['audio'])){
           				$results[$i]['audio_lists'] = @explode(",",$qlvalue['audio']);
@@ -592,7 +601,16 @@ class xippostsclass extends ObjectModel
           				$results[$i]['post_author_arr']['lastname'] = $post_author_arr->lastname;
           				$results[$i]['post_author_arr']['firstname'] = $post_author_arr->firstname;
           			}
-          			$results[$i]['link'] = xipblog::XipBlogPostLink(array('id'=>$qlvalue['id_xipposts'],'rewrite'=>$qlvalue['link_rewrite'],'page_type'=>$post_type));
+					// $results[$i]['link'] = xipblog::XipBlogPostLink(array('id'=>$qlvalue['id_xipposts'],'rewrite'=>$qlvalue['link_rewrite'],'page_type'=>$post_type));
+					$params = array(
+						'id' => $qlvalue['id_xipposts'],
+						'rewrite' => $qlvalue['link_rewrite']
+					);
+					if ($post_type != 'post') {
+						$params['page_type'] = $post_type;
+					}
+					$results[$i]['link'] = xipblog::XipBlogPostLink($params);
+					  
           			$results[$i]['post_tags'] = self::GetPostTagsResults($qlvalue['id_xipposts'],"tag");
           			if(isset($qlvalue['audio']) && !empty($qlvalue['audio'])){
           				$results[$i]['audio_lists'] = @explode(",",$qlvalue['audio']);
@@ -675,8 +693,17 @@ class xippostsclass extends ObjectModel
           				$results[$i]['post_author_arr']['lastname'] = $post_author_arr->lastname;
           				$results[$i]['post_author_arr']['firstname'] = $post_author_arr->firstname;
           			}
-          			$results[$i]['link'] = xipblog::XipBlogPostLink(array('id'=>$qlvalue['id_xipposts'],'rewrite'=>$qlvalue['link_rewrite'],'page_type'=>$post_type));
-          			$results[$i]['post_tags'] = self::GetPostTagsResults($qlvalue['id_xipposts'],"tag");
+          			// $results[$i]['link'] = xipblog::XipBlogPostLink(array('id'=>$qlvalue['id_xipposts'],'rewrite'=>$qlvalue['link_rewrite'],'page_type'=>$post_type));
+					$params = array(
+						'id' => $qlvalue['id_xipposts'],
+						'rewrite' => $qlvalue['link_rewrite']
+					);
+					if ($post_type != 'post') {
+						$params['page_type'] = $post_type;
+					}
+					$results[$i]['link'] = xipblog::XipBlogPostLink($params);
+					  
+					$results[$i]['post_tags'] = self::GetPostTagsResults($qlvalue['id_xipposts'],"tag");
           			if(isset($qlvalue['audio']) && !empty($qlvalue['audio'])){
           				$results[$i]['audio_lists'] = @explode(",",$qlvalue['audio']);
           			}
@@ -860,8 +887,17 @@ class xippostsclass extends ObjectModel
           				$results[$i]['post_author_arr']['lastname'] = $post_author_arr->lastname;
           				$results[$i]['post_author_arr']['firstname'] = $post_author_arr->firstname;
           			}
-          			$results[$i]['link'] = xipblog::XipBlogPostLink(array('id'=>$qlvalue['id_xipposts'],'rewrite'=>$qlvalue['link_rewrite'],'page_type'=>$post_type));
-          			$results[$i]['post_tags'] = self::GetPostTagsResults($qlvalue['id_xipposts'],"tag");
+					// $results[$i]['link'] = xipblog::XipBlogPostLink(array('id'=>$qlvalue['id_xipposts'],'rewrite'=>$qlvalue['link_rewrite'],'page_type'=>$post_type));
+					$params = array(
+						'id' => $qlvalue['id_xipposts'],
+						'rewrite' => $qlvalue['link_rewrite']
+					);
+					if ($post_type != 'post') {
+						$params['page_type'] = $post_type;
+					}
+					$results[$i]['link'] = xipblog::XipBlogPostLink($params);
+					  
+					$results[$i]['post_tags'] = self::GetPostTagsResults($qlvalue['id_xipposts'],"tag");
           			if(isset($qlvalue['audio']) && !empty($qlvalue['audio'])){
           				$results[$i]['audio_lists'] = @explode(",",$qlvalue['audio']);
           			}
@@ -899,5 +935,26 @@ class xippostsclass extends ObjectModel
       		}
         }
         return $results;
+	}
+	
+	public static function get_the_excerpt($id_post = NULL, $post_type = 'post')
+    {
+		if( $id_post == NULL ) {
+            return false;
+        }
+
+		$id_lang = (int)Context::getContext()->language->id;
+		$id_shop = (int)Context::getContext()->shop->id;
+
+        $sql = 'SELECT xcl.`post_excerpt` '
+                . 'FROM `' . _DB_PREFIX_ . 'xipposts` xc '
+                . 'INNER JOIN `' . _DB_PREFIX_ . 'xipposts_lang` xcl ON (xc.`id_xipposts` = xcl.`id_xipposts` AND xcl.`id_lang` = ' . $id_lang . ') '
+                . 'INNER JOIN `' . _DB_PREFIX_ . 'xipposts_shop` xcs ON (xc.`id_xipposts` = xcs.`id_xipposts` AND xcs.`id_shop` = ' . $id_shop . ') '
+                . 'WHERE xc.`post_type` = ' . $post_type . ' AND xc.`id_xipposts` = ' . $id_post;
+        
+        $results = Db::getInstance()->getRow($sql);
+
+        return $results;
     }
+
 }

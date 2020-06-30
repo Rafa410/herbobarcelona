@@ -5,9 +5,10 @@
         const isMobile = /Android|webOS|iPhone|iPad|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 
         // Carrier ID (Cambiar cada vez que se actualicen los ajustes de un transportista)
-        const correosExpID = '171';
-        const correosEstID = '139';
-        const oficinaCorreosID = '170';
+        // TODO: Mirar una forma de no tener que actualizarlo cada vez (id_reference_carrier en vez de id_carrier)
+        const correosExpID = '177';
+        const correosEstID = '175';
+        const oficinaCorreosID = '176';
         const feliuBcnID = '142';
         const feliuCatID = '144';
         const feliuEspID = '146';
@@ -38,18 +39,19 @@
                 
                 break;
 
-            case 'cart':
+            case 'cart': // TODO: Buscar una mejor forma de detectar el transportista
                 if ((prestashop.cart.subtotals.shipping.amount == 2.70) || (prestashop.cart.subtotals.shipping.amount == 3.60)
                     || (prestashop.cart.subtotals.shipping.amount == 2.60) || (prestashop.cart.subtotals.shipping.amount == 3.40)
                     || (prestashop.cart.subtotals.shipping.amount == 2.40)) {
                     supplier = '2';
                 }
                 countdown(supplier);
+                loadingAnimation(".remove-from-cart")
                 break;
 
             case 'checkout':
                 socialLogin();
-                loadingAnimation();
+                loadingAnimation("button[name='confirmDeliveryOption']");
                 const carrier = document.querySelectorAll(".dateCountdown");
                 const carrierPrice = document.querySelectorAll(".carrier-price");
                 for (let i = 0; i < carrier.length; i++) {
@@ -61,7 +63,7 @@
 
                         case feliuEspID:   // Feliubabalo Esp
 
-                            if ((carrierPrice[i].innerText.slice(0, 4) == "8,90") || (carrierPrice[i].innerText.slice(0, 4) == "7,35") || (carrierPrice[i].innerText.slice(0, 4) == "2,50")) // Feliubadalo & Distribudiet urgente
+                            if ((carrierPrice[i].innerText.slice(0, 4) == "8,90") || (carrierPrice[i].innerText.slice(0, 4) == "7,15") || (carrierPrice[i].innerText.slice(0, 4) == "2,50")) // Feliubadalo & Distribudiet urgente
                             {
                                 supplier = '1';
                             }
@@ -79,7 +81,7 @@
                             break;
 
                         case feliuBcnID:    // Super-Urgente Feliubadalo Bcn
-                            if ((carrierPrice[i].innerText.slice(0, 4) == "7,20") || (carrierPrice[i].innerText.slice(0, 4) == "3,95") || (carrierPrice[i].innerText.slice(0, 4) == "2,95")) // Feliubadalo & Distribudiet urgente
+                            if ((carrierPrice[i].innerText.slice(0, 4) == "7,20") || (carrierPrice[i].innerText.slice(0, 4) == "3,75") || (carrierPrice[i].innerText.slice(0, 4) == "2,50")) // Feliubadalo & Distribudiet urgente
                             {
                                 supplier = '1';
                             }
@@ -87,7 +89,7 @@
                             {
                                 supplier = '4';
                             }
-                            else if ((carrierPrice[i].innerText.slice(0, 4) == "5,95") || (carrierPrice[i].innerText.slice(0, 4) == "5,20")) // Feliubadalo & Distribudiet oficina 
+                            else if ((carrierPrice[i].innerText.slice(0, 4) == "5,95") || (carrierPrice[i].innerText.slice(0, 4) == "2,50")) // Feliubadalo & Distribudiet oficina 
                             {
                                 supplier = '5';
                             }
@@ -97,7 +99,7 @@
                             break;
 
                         case feliuCatID:    // Feliubadalo dia siguiente Cat
-                            if ((carrierPrice[i].innerText.slice(0, 4) == "8,10") || (carrierPrice[i].innerText.slice(0, 4) == "6,55") || (carrierPrice[i].innerText.slice(0, 4) == "2,95")) // Feliubadalo & Distribudiet urgente
+                            if ((carrierPrice[i].innerText.slice(0, 4) == "8,10") || (carrierPrice[i].innerText.slice(0, 4) == "6,35") || (carrierPrice[i].innerText.slice(0, 4) == "2,50")) // Feliubadalo & Distribudiet urgente
                             {
                                 supplier = '1';
                             }
@@ -135,6 +137,13 @@
                 }
                 break;
 
+            case 'cms':
+                const isFAQ = document.getElementsByClassName('page-cms-12').length;
+                if (isFAQ) {
+                    faq();
+                }
+                break;
+            
             default:
                 break;
         }
@@ -167,7 +176,7 @@
             const hollidays = [     // Lista con los dias festivos. El mes va de 0 (Enero) a 11 (Diciembre).
               // Dias fijos todos los años:
                 [1, 0, 'Año Nuevo'],
-                [6, 0, 'Reyes Magos'], // Epifania del Señor
+                [6, 0, 'Reyes Magos'],
                 [1, 4, 'Fiesta del trabajo'],
                 [15, 7, 'Asunción de la Virgen'],
                 [12, 9, 'Fiesta Nacional de España'],
@@ -226,17 +235,23 @@
             }
             else // Checkout
             {
-                const dateCheckoutMsg = document.getElementsByClassName('dateCountdown')[carrier]; // Selecciona el elemento HTML correspondiente al transportista actual
-                if (dateCheckoutMsg.id == puntoRecogidaID)      // Si el transportista es Punto de recogida
+                const carrierID = document.getElementsByClassName('dateCountdown')[carrier].id;
+
+                if (carrierID == oficinaCorreosID) // Si el transportista es Oficina de Correos
                 {
-                    let additionalMsg = '<p style="margin-top: 0.3rem;"><a href="#" id="btn-toggle-info_' + dateCheckoutMsg.id + '"><i class="material-icons add">add_circle</i><i class="material-icons remove" style="display:none;">remove_circle</i> Informaci&oacute;n</a></p><p id="more-info_' + dateCheckoutMsg.id + '">Recibir&aacute;s un correo cuando tu pedido est&eacute; listo para su recogida en <a href="https://goo.gl/maps/oSXTrW7uB7rRcEBf8" target="_blank" rel="nofollow noopener noreferrer">Calle Putget 78, 08023 Barcelona</a>.</p>';
-                    showCarrierInfoCheckout(dateCheckoutMsg, additionalMsg, dateCheckoutMsg.id);
+                    let additionalMsg = '<p style="margin-top: 0.3rem;"><a href="#" id="btn-toggle-info_' + carrierID + '"><i class="material-icons add">add_circle</i><i class="material-icons remove" style="display:none;">remove_circle</i> Informaci&oacute;n</a></p><p id="more-info_' + carrierID + '">Por defecto, se enviar&aacute; tu pedido a la <a href="https://www.correos.es/ss/Satellite/site/aplicacion-1349167812848-herramientas_y_apps/detalle_app-sidioma=es_ES" rel="noopener noreferrer" target="_blank">Oficina de Correos</a> m&aacute;s cercana a la direcci&oacute;n introducida en el paso anterior. Puedes a&ntilde;adir un comentario al pedido si prefieres que lo enviemos a una oficina espec&iacute;fica.</p>';
+                    showCarrierInfoCheckout(carrierID, additionalMsg);
                 }
-                else if (dateCheckoutMsg.id == oficinaCorreosID) // Si el transportista es Oficina de Correos
+                else if (carrierID == puntoRecogidaID) // Si el transportista es Punto de recogida
                 {
-                    let additionalMsg = '<p style="margin-top: 0.3rem;"><a href="#" id="btn-toggle-info_' + dateCheckoutMsg.id + '"><i class="material-icons add">add_circle</i><i class="material-icons remove" style="display:none;">remove_circle</i> Informaci&oacute;n</a></p><p id="more-info_' + dateCheckoutMsg.id + '">Por defecto, se enviar&aacute; tu pedido a la <a href="https://www.correos.es/ss/Satellite/site/aplicacion-1349167812848-herramientas_y_apps/detalle_app-sidioma=es_ES" rel="noopener noreferrer" target="_blank">Oficina de Correos</a> m&aacute;s cercana a la direcci&oacute;n introducida en el paso anterior. Puedes a&ntilde;adir un comentario al pedido si prefieres que lo enviemos a una oficina espec&iacute;fica.</p>';
-                    showCarrierInfoCheckout(dateCheckoutMsg, additionalMsg, dateCheckoutMsg.id);
+                    let additionalMsg = '<p style="margin-top: 0.3rem;"><a href="#" id="btn-toggle-info_' + carrierID + '"><i class="material-icons add">add_circle</i><i class="material-icons remove" style="display:none;">remove_circle</i> Informaci&oacute;n</a></p><p id="more-info_' + carrierID + '">Recibir&aacute;s un correo cuando tu pedido est&eacute; listo para su recogida en <a href="https://goo.gl/maps/oSXTrW7uB7rRcEBf8" target="_blank" rel="nofollow noopener noreferrer">Calle Putget 78, 08023 Barcelona</a>.</p>';
+                    showCarrierInfoCheckout(carrierID, additionalMsg);
                 }
+                // else if (carrierID == correosExpID) // Si el transportista es Correos Express
+                // {
+                //     let additionalMsg = '<p style="margin-top: 0.3rem;"><a href="#" id="btn-toggle-info_' + carrierID + '"><i class="material-icons add">add_circle</i><i class="material-icons remove" style="display:none;">remove_circle</i> Informaci&oacute;n</a></p><p id="more-info_' + carrierID + '">Correos Express ha activado el protocolo <b>Entregas seguras sin contacto</b> para garantizar la seguridad de clientes y repartidores. Se llevará a cabo una correcta higiene de las manos antes, durante y después del reparto. El paquete se depositará en el suelo antes de llamar al timbre y se identificará al cliente con el DNI en vez de con la firma digital, manteniendo en todo momento una distancia de 2 metros.</p>';
+                //     showCarrierInfoCheckout(carrierID, additionalMsg);
+                // }
             }
 
 
@@ -250,7 +265,7 @@
                 * showRemainingTime() ==> Calcula el tiempo restante para pasar el pedido y que se prepare el mismo día. Añade el resultado a un elemento HTML.
                 * showDeliveryDate() ==> Añade la fecha de entrega a un elemento HTML.
                 * showHollidayMsg() ==> Muestra un mensaje con los días festivos que afectan a la fecha de entrega.
-                * showCarrierInfoCheckout(HTML element, string, number) ==> Muestra información adicional en determinados transportistas en el checkout
+                * showCarrierInfoCheckout(number, string) ==> Muestra información adicional en determinados transportistas en el checkout. @carrierID, @additionalMsg.
 
             **************************/
 
@@ -494,8 +509,9 @@
 
             }
 
-            function showCarrierInfoCheckout(currentMsg, additionalInfo, carrierID) {
-                currentMsg.innerHTML += additionalInfo;
+            function showCarrierInfoCheckout(carrierID, additionalInfo) {
+
+                document.getElementById('additional-msg_' + carrierID).innerHTML += additionalInfo;
 
                 $(document).on('click', '#btn-toggle-info_' + carrierID, function () {
                     $('#more-info_' + carrierID).slideToggle();
@@ -528,9 +544,9 @@
             });
         }
 
-        function loadingAnimation() { // Loading animation al hacer click en boton continuar del paso 3 del checkout (envio)
+        function loadingAnimation($selector) { // Loading animation al hacer click en boton continuar del paso 3 del checkout (envio)
 
-            $(document).on("click", "button[name='confirmDeliveryOption']", function () {
+            $(document).on("click", $selector, function () {
                 $(this).addClass("loading");
             });
 
@@ -625,11 +641,12 @@
 
             if (isMobile) {
                 $(document).on("click", "#search-icon", function () {
-                    if (SB.css("display") == "block") {
-                        SB.fadeOut();
-                    } else {
-                        SB.fadeIn("fast");
-                        si.focus();
+                    if (SB.hasClass("active")) {
+                        SB.removeClass("active");    
+                    } 
+                    else {
+                        SB.addClass("active");
+                        si.focus()
                     }
                 });
             } else {
@@ -664,7 +681,21 @@
         }
        
        
-        function stickyAddToCart() { // TODO (Mirar Media markt mobile)
+        function faq() {
+            const items = document.querySelectorAll(".faq-item h2");
+
+            items.forEach(item => 
+                item.addEventListener('click', toggleAnswer)
+            );
+
+            function toggleAnswer(){
+                this.classList.toggle('active');
+                this.nextElementSibling.classList.toggle('active');
+            }
+        }
+
+
+        function stickyAddToCart() { // TODO
         }
 
         // NEXT function

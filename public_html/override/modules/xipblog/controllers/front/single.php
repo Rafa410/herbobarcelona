@@ -28,9 +28,7 @@ class xipblogSingleModuleFrontControllerOverride extends xipblogSingleModuleFron
         
         $xipblogpost = $smarty->getTemplateVars('xipblogpost');
 
-        if ( $xipblogpost['id_xipposts'] == 12 ) { // TEST Articulaciones
-            $xipblogpost['post_content'] = $this->returnContent($xipblogpost['post_content']); 
-        }
+        $xipblogpost['post_content'] = $this->returnContent($xipblogpost['post_content']); 
 
         $this->context->smarty->assign('xipblogpost', $xipblogpost);
 
@@ -57,7 +55,7 @@ class xipblogSingleModuleFrontControllerOverride extends xipblogSingleModuleFron
          return $contents;
     }
 
-    public function returnProduct($id_product) // TODO
+    public function returnProduct($id_product)
     {
         $x = (array)new Product($id_product, true, $this->context->language->id);
         if (is_int($x['id'])) {

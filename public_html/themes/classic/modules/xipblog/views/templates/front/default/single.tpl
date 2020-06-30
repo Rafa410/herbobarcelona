@@ -46,17 +46,21 @@
 							<h1 class="post_title">{$xipblogpost.post_title}</h3>
 							<div class="post_meta clearfix">
 								<div class="meta_author">
-									{* <i class="icon-user"></i> *}
+									<i class="material-icons">account_circle</i>
 									<span>{l s='By' mod='xipblog'} {$xipblogpost.post_author_arr.firstname} {$xipblogpost.post_author_arr.lastname}</span>
 								</div>
+								{* <div class="post_meta_date">
+									<i class="material-icons">event</i>
+									{$xpblgpst.post_date|date_format:"%d/%m/%y"}
+								</div> *}
 								<div class="meta_category">
-									{* <i class="icon-tag"></i> *}
+									<i class="material-icons">local_offer</i>
 									<span>{l s='In' mod='xipblog'}</span>
 									<span>{$xipblogpost.category_default_arr.name}</span>
 								</div>
 								<div class="meta_comment">
-									 <i class="material-icons">remove_red_eye</i> 
-									<span style="vertical-align:top">{*{l s='Views' mod='xipblog'}*} ({$xipblogpost.comment_count})</span>
+									 <i class="material-icons">remove_red_eye</i>
+									<span>{*{l s='Views' mod='xipblog'}*} ({$xipblogpost.comment_count})</span>
 								</div>
 							</div>
 							<div class="post_content page-content page-cms">

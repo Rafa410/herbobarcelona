@@ -127,24 +127,39 @@
           {/if}
         {/block}
       </div>
+    
+    <!-- add-to-cart button on miniatures -->
+    <div class="product-add-cart btn-cart-miniature"> {*product-actions*}
+          <form action="{$urls.pages.cart}?add=1&amp;id_product={$product.id}&amp;id_product_attribute={$product.id_customization}&amp;token={$static_token}" method="post">
+            <input type="hidden" name="id_product" value="{$product.id}">
+            <div class="product-add-to-cart">
+                <div class="product-quantity clearfix">
+                
+                  <input type="hidden" name="qty" value="1" class="form-control input-qty" min="1">
 
-    {if $page.page_name != 'product'}
-    <!-- Custom add-to-cart button -->
-    {block name='product_buy'}
-            <div class="product-actions btn-cart-miniature">
-              <form action="{$urls.pages.cart}" method="post" id="add-to-cart-or-refresh">
-                <input type="hidden" name="token" value="{$static_token}">
-                <input type="hidden" name="id_product" value="{$product.id}" id="product_page_product_id">
-                <input type="hidden" name="id_customization" value="{$product.id_customization}" id="product_customization_id">
-                {block name='product_add_to_cart'}
-                  {include file='catalog/_partials/product-add-to-cart.tpl'}
-                {/block}
-                {block name='product_refresh'}{/block}
-            </form>
-          </div>
-        {/block}
-    <!-- End -->
-    {/if}
+                  <div class="add">
+                      <button 
+                        class="btn btn-primary add-to-cart" 
+                        data-button-action="add-to-cart" 
+                        type="submit"
+                        {if $product.availability == 'unavailable'}
+                            title="Sin stock"
+                            disabled
+                        {/if}
+                      >
+                        <i class="material-icons shopping-cart">&#xE547;</i>
+                          <div class="loader">
+                            <div></div><div></div><div></div><div></div>
+                          </div>
+                          <span>{l s='Add to cart' d='Shop.Theme.Actions'}</span>
+                      </button>
+                  </div>
+                </div>
+            </div>       
+            {block name='product_refresh'}{/block}
+          </form>
+    </div>
+    <!-- End add-to-cart -->
     
     </div>
   </article>
