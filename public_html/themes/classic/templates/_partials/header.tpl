@@ -83,13 +83,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
               {hook h='displayNav2'}
           </div>
         </div>
-        <div class="hidden-md-up text-sm-center mobile">
+        <div class="hidden-md-up flex-container mobile">
           <div class="float-xs-left" id="menu-icon">
             <span data-target="#mobile_top_menu_wrapper" data-toggle="collapse" class="collapse-icons">
                   <span></span>
-				  <span></span>
-				  <span></span>
-				  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span></span>
             </span>
           </div>
           <div class="float-xs-left" id="search-icon">

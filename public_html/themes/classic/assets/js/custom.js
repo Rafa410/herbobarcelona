@@ -4,15 +4,17 @@
 
         const isMobile = /Android|webOS|iPhone|iPad|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 
-        // Carrier ID (Cambiar cada vez que actualizamos los ajustes de un transportista)
-        const correosExpID = '138';
-        const correosEstID = '139';
-        const oficinaCorreosID = '170';
+        // Carrier ID (Cambiar cada vez que se actualicen los ajustes de un transportista)
+        // TODO: Mirar una forma de no tener que actualizarlo cada vez (id_reference_carrier en vez de id_carrier)
+        const correosExpID = '177';
+        const correosEstID = '175';
+        const oficinaCorreosID = '176';
         const feliuBcnID = '142';
         const feliuCatID = '144';
         const feliuEspID = '146';
         const puntoRecogidaID = '149';
         const correosExpIntID = '169';
+        const tipsaID = '172';
 
         const distribudietID = '1';
         const feliubadaloID = '2';
@@ -27,42 +29,41 @@
             case 'product':
                 if (($("#product-details").data("product").quantity > 0)
                     || ($("#product-details").data("product").availability == 'available')
-                    || ($("#product-details").data("product").availability == 'last_remaining_items')) {
+                    || ($("#product-details").data("product").availability == 'last_remaining_items'))  {
                     const supplier = $("#product-details").data("product").id_supplier;
                     countdown(supplier);
                     if (supplier == '2') {
                         document.getElementsByClassName("avisoFB")[0].style.display = 'block';
                     }
                 }
-
-                addToCartBtnEffects();
                 
                 break;
 
-            case 'cart':
+            case 'cart': // TODO: Buscar una mejor forma de detectar el transportista
                 if ((prestashop.cart.subtotals.shipping.amount == 2.70) || (prestashop.cart.subtotals.shipping.amount == 3.60)
                     || (prestashop.cart.subtotals.shipping.amount == 2.60) || (prestashop.cart.subtotals.shipping.amount == 3.40)
                     || (prestashop.cart.subtotals.shipping.amount == 2.40)) {
                     supplier = '2';
                 }
                 countdown(supplier);
-                addToCartBtnEffects();
+                loadingAnimation(".remove-from-cart")
                 break;
 
             case 'checkout':
                 socialLogin();
-                loadingAnimation();
+                loadingAnimation("button[name='confirmDeliveryOption']");
                 const carrier = document.querySelectorAll(".dateCountdown");
                 const carrierPrice = document.querySelectorAll(".carrier-price");
                 for (let i = 0; i < carrier.length; i++) {
                     switch (carrier[i].id) {
                         case correosExpID:   // Correos Express
+                        case tipsaID:        // Tipsa
                             supplier = '1';
                             break;
 
                         case feliuEspID:   // Feliubabalo Esp
 
-                            if ((carrierPrice[i].innerText.slice(0, 4) == "8,90") || (carrierPrice[i].innerText.slice(0, 4) == "7,35") || (carrierPrice[i].innerText.slice(0, 4) == "2,95")) // Feliubadalo & Distribudiet urgente
+                            if ((carrierPrice[i].innerText.slice(0, 4) == "8,90") || (carrierPrice[i].innerText.slice(0, 4) == "7,15") || (carrierPrice[i].innerText.slice(0, 4) == "2,50")) // Feliubadalo & Distribudiet urgente
                             {
                                 supplier = '1';
                             }
@@ -80,7 +81,7 @@
                             break;
 
                         case feliuBcnID:    // Super-Urgente Feliubadalo Bcn
-                            if ((carrierPrice[i].innerText.slice(0, 4) == "7,20") || (carrierPrice[i].innerText.slice(0, 4) == "3,95") || (carrierPrice[i].innerText.slice(0, 4) == "2,95")) // Feliubadalo & Distribudiet urgente
+                            if ((carrierPrice[i].innerText.slice(0, 4) == "7,20") || (carrierPrice[i].innerText.slice(0, 4) == "3,75") || (carrierPrice[i].innerText.slice(0, 4) == "2,50")) // Feliubadalo & Distribudiet urgente
                             {
                                 supplier = '1';
                             }
@@ -88,7 +89,7 @@
                             {
                                 supplier = '4';
                             }
-                            else if ((carrierPrice[i].innerText.slice(0, 4) == "5,95") || (carrierPrice[i].innerText.slice(0, 4) == "5,20")) // Feliubadalo & Distribudiet oficina 
+                            else if ((carrierPrice[i].innerText.slice(0, 4) == "5,95") || (carrierPrice[i].innerText.slice(0, 4) == "2,50")) // Feliubadalo & Distribudiet oficina 
                             {
                                 supplier = '5';
                             }
@@ -98,7 +99,7 @@
                             break;
 
                         case feliuCatID:    // Feliubadalo dia siguiente Cat
-                            if ((carrierPrice[i].innerText.slice(0, 4) == "8,10") || (carrierPrice[i].innerText.slice(0, 4) == "6,55") || (carrierPrice[i].innerText.slice(0, 4) == "2,95")) // Feliubadalo & Distribudiet urgente
+                            if ((carrierPrice[i].innerText.slice(0, 4) == "8,10") || (carrierPrice[i].innerText.slice(0, 4) == "6,35") || (carrierPrice[i].innerText.slice(0, 4) == "2,50")) // Feliubadalo & Distribudiet urgente
                             {
                                 supplier = '1';
                             }
@@ -137,15 +138,20 @@
                 break;
 
             case 'cms':
-                addToCartBtnEffects();
+                const isFAQ = document.getElementsByClassName('page-cms-12').length;
+                if (isFAQ) {
+                    faq();
+                }
                 break;
-            case 'module-blockwishlist-view':
-                addToCartBtnEffects();
-                break;
+            
             default:
                 break;
         }
 
+        /* Functions to execute on ALL PAGES */
+
+        addToCartBtnEffects();
+        
         changeStyleBlogFooter()
 
         hideCookies();
@@ -157,13 +163,12 @@
             * @supp --> Contiene el ID del proveedor o del transportista.
             * @carrier --> Contiene el ID del transportista cuando hay varios en la misma pagina (en el Paso 3 del checkout). Por defecto es 0.
          */
-        function countdown(supp, carrier = 0) { // TODO: Domingo por la tarde la fecha de entrega sale un dia mas (miercoles en vez de martes).
+        function countdown(supp, carrier = 0) { // TODO: Sabado y domingo por la tarde la fecha de entrega sale un dia mas (miercoles en vez de martes).
 
             const countdownMsg = document.getElementById('countdown'); // Elemento HTML que contiene el mensaje del Countdown
 
             let currentDate = new Date();               // Fecha actual
             let maxDate = new Date();                   // Hora limite para pasar el pedido y que se prepare el mismo dia
-            let shippingDays;                           // Numero de dias a añadir a la fecha actual hasta llegar a la fecha de entrega
             let today = false,                          // Booleanos que indican si el paquete se entrega hoy o mañana, para añadirlo al mensaje.
                 tomorrow = false;
             let isBeforeMaxDate = false;                // Booleano que indica si el pedido se prepara el mismo dia o no, dependiendo de la hora limite (@maxDate).
@@ -171,7 +176,7 @@
             const hollidays = [     // Lista con los dias festivos. El mes va de 0 (Enero) a 11 (Diciembre).
               // Dias fijos todos los años:
                 [1, 0, 'Año Nuevo'],
-                [6, 0, 'Reyes Magos'], // Epifania del Señor
+                [6, 0, 'Reyes Magos'],
                 [1, 4, 'Fiesta del trabajo'],
                 [15, 7, 'Asunción de la Virgen'],
                 [12, 9, 'Fiesta Nacional de España'],
@@ -180,7 +185,8 @@
                 [8, 11, 'Immaculada Concepción'],
                 [25, 11, 'Navidad']
 
-              // Dias variables:
+              // Dias variables: (TODO)
+              // Por ej: Primer jueves de Abril 
 
             ];
             let hollidaysInUse = []; // Lista con los dias festivos que afectan a la fecha de entrega actual.
@@ -211,7 +217,7 @@
             ];
 
 
-            shippingDays = getShippingDays();
+            let shippingDays = getShippingDays();   // Numero de dias a añadir a la fecha actual hasta llegar a la fecha de entrega
 
             let deliveryDateMillisec = calculateDeliveryDate(shippingDays); // Fecha de entrega del pedido en milisegundos
             let deliveryDate = new Date(deliveryDateMillisec);              // Fecha de entrega del pedido en formato Date()
@@ -229,17 +235,23 @@
             }
             else // Checkout
             {
-                const dateCheckoutMsg = document.getElementsByClassName('dateCountdown')[carrier]; // Selecciona el elemento HTML correspondiente al transportista actual
-                if (dateCheckoutMsg.id == puntoRecogidaID)      // Si el transportista es Punto de recogida
+                const carrierID = document.getElementsByClassName('dateCountdown')[carrier].id;
+
+                if (carrierID == oficinaCorreosID) // Si el transportista es Oficina de Correos
                 {
-                    let additionalMsg = '<p style="margin-top: 0.3rem;"><a href="#" id="btn-toggle-info_' + dateCheckoutMsg.id + '"><i class="material-icons add">add_circle</i><i class="material-icons remove" style="display:none;">remove_circle</i> Informaci&oacute;n</a></p><p id="more-info_' + dateCheckoutMsg.id + '">Recibir&aacute;s un correo cuando tu pedido est&eacute; listo para su recogida en <a href="https://goo.gl/maps/oSXTrW7uB7rRcEBf8" target="_blank" rel="nofollow noopener noreferrer">Calle Putget 78, 08023 Barcelona</a>.</p>';
-                    showCarrierInfoCheckout(dateCheckoutMsg, additionalMsg, dateCheckoutMsg.id);
+                    let additionalMsg = '<p style="margin-top: 0.3rem;"><a href="#" id="btn-toggle-info_' + carrierID + '"><i class="material-icons add">add_circle</i><i class="material-icons remove" style="display:none;">remove_circle</i> Informaci&oacute;n</a></p><p id="more-info_' + carrierID + '">Por defecto, se enviar&aacute; tu pedido a la <a href="https://www.correos.es/ss/Satellite/site/aplicacion-1349167812848-herramientas_y_apps/detalle_app-sidioma=es_ES" rel="noopener noreferrer" target="_blank">Oficina de Correos</a> m&aacute;s cercana a la direcci&oacute;n introducida en el paso anterior. Puedes a&ntilde;adir un comentario al pedido si prefieres que lo enviemos a una oficina espec&iacute;fica.</p>';
+                    showCarrierInfoCheckout(carrierID, additionalMsg);
                 }
-                else if (dateCheckoutMsg.id == oficinaCorreosID) // Si el transportista es Oficina de Correos
+                else if (carrierID == puntoRecogidaID) // Si el transportista es Punto de recogida
                 {
-                    let additionalMsg = '<p style="margin-top: 0.3rem;"><a href="#" id="btn-toggle-info_' + dateCheckoutMsg.id + '"><i class="material-icons add">add_circle</i><i class="material-icons remove" style="display:none;">remove_circle</i> Informaci&oacute;n</a></p><p id="more-info_' + dateCheckoutMsg.id + '">Por defecto, se enviar&aacute; tu pedido a la <a href="https://www.correos.es/ss/Satellite/site/aplicacion-1349167812848-herramientas_y_apps/detalle_app-sidioma=es_ES" rel="noopener noreferrer" target="_blank">Oficina de Correos</a> m&aacute;s cercana a la direcci&oacute;n introducida en el paso anterior. Puedes a&ntilde;adir un comentario al pedido si prefieres que lo enviemos a una oficina espec&iacute;fica.</p>';
-                    showCarrierInfoCheckout(dateCheckoutMsg, additionalMsg, dateCheckoutMsg.id);
+                    let additionalMsg = '<p style="margin-top: 0.3rem;"><a href="#" id="btn-toggle-info_' + carrierID + '"><i class="material-icons add">add_circle</i><i class="material-icons remove" style="display:none;">remove_circle</i> Informaci&oacute;n</a></p><p id="more-info_' + carrierID + '">Recibir&aacute;s un correo cuando tu pedido est&eacute; listo para su recogida en <a href="https://goo.gl/maps/oSXTrW7uB7rRcEBf8" target="_blank" rel="nofollow noopener noreferrer">Calle Putget 78, 08023 Barcelona</a>.</p>';
+                    showCarrierInfoCheckout(carrierID, additionalMsg);
                 }
+                // else if (carrierID == correosExpID) // Si el transportista es Correos Express
+                // {
+                //     let additionalMsg = '<p style="margin-top: 0.3rem;"><a href="#" id="btn-toggle-info_' + carrierID + '"><i class="material-icons add">add_circle</i><i class="material-icons remove" style="display:none;">remove_circle</i> Informaci&oacute;n</a></p><p id="more-info_' + carrierID + '">Correos Express ha activado el protocolo <b>Entregas seguras sin contacto</b> para garantizar la seguridad de clientes y repartidores. Se llevará a cabo una correcta higiene de las manos antes, durante y después del reparto. El paquete se depositará en el suelo antes de llamar al timbre y se identificará al cliente con el DNI en vez de con la firma digital, manteniendo en todo momento una distancia de 2 metros.</p>';
+                //     showCarrierInfoCheckout(carrierID, additionalMsg);
+                // }
             }
 
 
@@ -253,7 +265,7 @@
                 * showRemainingTime() ==> Calcula el tiempo restante para pasar el pedido y que se prepare el mismo día. Añade el resultado a un elemento HTML.
                 * showDeliveryDate() ==> Añade la fecha de entrega a un elemento HTML.
                 * showHollidayMsg() ==> Muestra un mensaje con los días festivos que afectan a la fecha de entrega.
-                * showCarrierInfoCheckout(HTML element, string, number) ==> Muestra información adicional en determinados transportistas en el checkout
+                * showCarrierInfoCheckout(number, string) ==> Muestra información adicional en determinados transportistas en el checkout. @carrierID, @additionalMsg.
 
             **************************/
 
@@ -264,7 +276,7 @@
             }
 
 
-            function isHolliday(milliseconds) { // Devuelve TRUE si es un dia festivo, FALSE si no lo es
+            function isHolliday(milliseconds) { // Devuelve TRUE si es un dia festivo (y lo añade a la lista @hollidaysInUse), FALSE si no lo es
 
                 const date = new Date(milliseconds);
                 const checkHolliday = (holliday) => { // Funcion que devuelve un booleano indicando si la fecha actual coincide con alguno de los dias festivos.
@@ -272,7 +284,6 @@
                     {
                         for (let i = 0; i < hollidaysInUse.length; i++) {
                             if ((hollidaysInUse[i][0] == holliday[0]) && (hollidaysInUse[i][1] == holliday[1])) { // Comprueba que no haya sido añadido anteriormente este festivo
-                                console.log('holliday already checked'); // TEST
                                 return true;
                             }
                         }
@@ -293,19 +304,15 @@
             {
                 let shippingDays;
 
-                switch (supp)   // Asigna el nºmero de dias 'shippingDays' en funcion del transportista y/o proveedor
+                switch (supp)   // Asigna el numero de dias 'shippingDays' en funcion del transportista y/o proveedor
                 {
                     case '0': 
                     case distribudietID:   // Distribudiet - Correos Express
                         maxDate.setHours(14, 0, 0);
+                        shippingDays = 1;
 
                         if (currentDate < maxDate) { // Antes de la hora limite
-                            shippingDays = 1;
-                            isBeforeMaxDate = true; // TODO: Comprobar si es fin de semana
-                        }
-                        else                        // Despues de la hora limite
-                        {
-                            shippingDays = 2;
+                            isBeforeMaxDate = true;
                         }
 
                         break;
@@ -313,26 +320,20 @@
                     case feliubadaloID:  // Feliubadalo BCN
                     case '6':            // Punto de recogida oficina Barcelona
                         maxDate.setHours(12, 30, 0);
+                        shippingDays = 0;
 
                         if (currentDate < maxDate) {
-                            shippingDays = 0;
                             isBeforeMaxDate = true;
-                        }
-                        else {
-                            shippingDays = 1;
                         }
 
                         break;
 
                     case '3':    // Feliubadalo CAT
                         maxDate.setHours(18, 0, 0);
+                        shippingDays = 1;
 
                         if (currentDate < maxDate) {
-                            shippingDays = 1;
                             isBeforeMaxDate = true;
-                        }
-                        else {
-                            shippingDays = 2;
                         }
 
                         break;
@@ -340,15 +341,11 @@
                     case '4':   // Correos Estandar
                     case '5':   // Oficina Correos
                         maxDate.setHours(17, 30, 0);
+                        shippingDays = 2;
 
                         if (currentDate < maxDate)  // Antes de la hora limite      
                         {
-                            shippingDays = 2;
                             isBeforeMaxDate = true;
-                        }
-                        else          // Despues de la hora limite
-                        {
-                            shippingDays = 3;
                         }
 
                         break;
@@ -359,7 +356,7 @@
                         break;
                 }
 
-                if ( isWeekend(currentDate.getTime()) || isHolliday(currentDate.getTime()) ) {
+                if ( (isBeforeMaxDate) &&  (isWeekend(currentDate.getTime()) || isHolliday(currentDate.getTime())) ) {
                     isBeforeMaxDate = false;
                 }
 
@@ -378,7 +375,15 @@
 
                 if (!isBeforeMaxDate) { // Si ya ha pasado la hora limite añadimos un dia a la fecha maxima para pasar pedido. Se usa para calcular la cuenta atras (countdown).
                     maxDate += addMillisecondsDay();
+                    deliveryDateMillisec += addMillisecondsDay();
+                    count++;
                 }
+
+                // console.log('DeliveryDate BEFORE while: ' + new Date(deliveryDateMillisec)); // TEST
+                // console.log('Max date BEFORE while: ' + new Date(maxDate)); // TEST
+                // console.log('count BEFORE  while: ' + count); // TEST
+                // console.log('nDays BEFORE while: ' + nDays); // TEST
+                // console.log('------------ BEGINING WHILE -----------'); // TEST
 
                 while (nDays > 0) { // TODO: Cuando nDays==0 y es festivo se añade un dia de mas
 
@@ -388,6 +393,7 @@
                     if ((isWeekend(deliveryDateMillisec)) || (isHolliday(deliveryDateMillisec))) { // Comprueba si la fecha de entrega es fin de semana o festivo
 
                         // console.log('deliveryDate is weekend OR isHolliday: TRUE : ' + new Date(deliveryDateMillisec)); // TEST
+
                         if ((isWeekend(maxDate)) || (isHolliday(maxDate))) {  // Comprueba si la fecha maxima para pasar el pedido es fin de semana o festivo
                             maxDate += addMillisecondsDay();
                         }
@@ -406,10 +412,13 @@
 
                     if ((nDays == 0) && ((isWeekend(deliveryDateMillisec)) || (isHolliday(deliveryDateMillisec)))) {
 
-                        // console.log('nDays=0 & deliveryDate is weekend OR isHolliday: TRUE : ' + new Date(deliveryDateMillisec)); // TEST
+                        // console.log('nDays == 0 AND deliveryDate isWeekend OR isHolliday : ' + new Date(deliveryDateMillisec)); // TEST
+                        
                         deliveryDateMillisec += addMillisecondsDay();
                         lastDay = true;
-                        // console.log('lastDay : true ' + new Date(deliveryDateMillisec)); // TEST
+                        
+                        // console.log('lastDay = TRUE ' + new Date(deliveryDateMillisec)); // TEST
+                        
                         nDays++;
                         count++;
                     }
@@ -419,9 +428,9 @@
 
                     // console.log('lastDay = ' + lastDay); // TEST
                     // console.log('DeliveryDate: ' + new Date(deliveryDateMillisec)); // TEST
-                    // console.log('count end  while: ' + count); // TEST
-                    // console.log('nDays end while: ' + nDays); // TEST
-
+                    // console.log('count END  while: ' + count); // TEST
+                    // console.log('nDays END while: ' + nDays); // TEST
+                    // console.log(' ----------- END WHILE ------------'); // TEST
                 }
 
                 if (count == 0) {
@@ -500,8 +509,9 @@
 
             }
 
-            function showCarrierInfoCheckout(currentMsg, additionalInfo, carrierID) {
-                currentMsg.innerHTML += additionalInfo;
+            function showCarrierInfoCheckout(carrierID, additionalInfo) {
+
+                document.getElementById('additional-msg_' + carrierID).innerHTML += additionalInfo;
 
                 $(document).on('click', '#btn-toggle-info_' + carrierID, function () {
                     $('#more-info_' + carrierID).slideToggle();
@@ -517,25 +527,26 @@
 
 
 
-        function addToCartBtnEffects() //Efectos en el boton añadir al carrito
+        function addToCartBtnEffects() // Efecto tracking en el boton añadir al carrito al pasar el raton por encima
         {
-            // Efecto tracking al hacer hover
-            const btn = document.querySelector('.add-to-cart') || {};
-            btn.onmousemove = function (e) {
-                let x = e.pageX - btn.offsetLeft - btn.offsetParent.offsetLeft;
-                let y = e.pageY - btn.offsetTop - btn.offsetParent.offsetTop;
-                btn.style.setProperty('--x', x + 'px');
-                btn.style.setProperty('--y', y + 'px');
-            }
-            //Loading animation al hacer click
-            $(document).on("click", ".add-to-cart", function () {
-                $(this).addClass("loading");
+            const buttons = document.querySelectorAll('.add-to-cart');
+
+            buttons.forEach(btn => {
+                btn.onmousemove = function(e) {
+                    let x = e.pageX - btn.offsetLeft - btn.offsetParent.offsetLeft;
+                    let y = e.pageY - btn.offsetTop - btn.offsetParent.offsetTop;
+                    btn.style.setProperty('--x', x + 'px');
+                    btn.style.setProperty('--y', y + 'px');
+                }
+                btn.onclick = function() {
+                    btn.classList.add('loading');
+                }
             });
         }
 
-        function loadingAnimation() { // Loading animation al hacer click en boton continuar del paso 3 del checkout (envio)
+        function loadingAnimation($selector) { // Loading animation al hacer click en boton continuar del paso 3 del checkout (envio)
 
-            $(document).on("click", "button[name='confirmDeliveryOption']", function () {
+            $(document).on("click", $selector, function () {
                 $(this).addClass("loading");
             });
 
@@ -630,11 +641,12 @@
 
             if (isMobile) {
                 $(document).on("click", "#search-icon", function () {
-                    if (SB.css("display") == "block") {
-                        SB.fadeOut();
-                    } else {
-                        SB.fadeIn("fast");
-                        si.focus();
+                    if (SB.hasClass("active")) {
+                        SB.removeClass("active");    
+                    } 
+                    else {
+                        SB.addClass("active");
+                        si.focus()
                     }
                 });
             } else {
@@ -669,7 +681,21 @@
         }
        
        
-        function stickyAddToCart() { // TODO (Mirar Media markt mobile)
+        function faq() {
+            const items = document.querySelectorAll(".faq-item h2");
+
+            items.forEach(item => 
+                item.addEventListener('click', toggleAnswer)
+            );
+
+            function toggleAnswer(){
+                this.classList.toggle('active');
+                this.nextElementSibling.classList.toggle('active');
+            }
+        }
+
+
+        function stickyAddToCart() { // TODO
         }
 
         // NEXT function
