@@ -308,7 +308,8 @@
                 {
                     case '0': 
                     case distribudietID:   // Distribudiet - Correos Express
-                        maxDate.setHours(14, 0, 0);
+                        // maxDate.setHours(14, 0, 0);
+                        maxDate.setHours(12, 30, 0); // Horario verano
                         shippingDays = 1;
 
                         if (currentDate < maxDate) { // Antes de la hora limite
@@ -340,7 +341,8 @@
 
                     case '4':   // Correos Estandar
                     case '5':   // Oficina Correos
-                        maxDate.setHours(17, 30, 0);
+                        // maxDate.setHours(17, 30, 0);
+                        maxDate.setHours(12, 30, 0); // Horario verano
                         shippingDays = 2;
 
                         if (currentDate < maxDate)  // Antes de la hora limite      
@@ -351,7 +353,8 @@
                         break;
                     case '7': // TODO
                     default:
-                        maxDate.setHours(14, 0, 0);
+                        // maxDate.setHours(14, 0, 0);
+                        maxDate.setHours(12, 30, 0); // Horario verano
                         shippingDays = 2;
                         break;
                 }

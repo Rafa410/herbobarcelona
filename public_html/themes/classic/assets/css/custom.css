@@ -1269,6 +1269,29 @@ body#checkout section.checkout-step div.forgot-password {
 }
 
 
+/* Expand icon toggle animation */
+.cart-summary-products > p > a::after, 
+.promo-code-button::after {
+    font-family: Material Icons;
+    content: "\e5cf";
+    font-size: 24px;
+    display: inline-block;
+    vertical-align: middle;
+    width: 1em;
+    height: 1em;
+    line-height: 1;
+    text-decoration: none;
+    white-space: nowrap;
+    transform: rotateZ(0deg);
+    transition: transform 0.5s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+}
+    .cart-summary-products > p > a[aria-expanded='true']::after, 
+    .promo-code-button[aria-expanded='true']::after {
+        transform: rotateZ(180deg);
+    }
+
+
+
 
 @keyframes pop-in-out {
     0% {
