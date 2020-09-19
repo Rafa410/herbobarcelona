@@ -8,7 +8,7 @@
         // TODO: Mirar una forma de no tener que actualizarlo cada vez (id_reference_carrier en vez de id_carrier)
         const correosExpID = '177';
         const correosEstID = '175';
-        const oficinaCorreosID = '176';
+        const oficinaCorreosID = '178';
         const feliuBcnID = '142';
         const feliuCatID = '144';
         const feliuEspID = '146';
