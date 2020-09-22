@@ -31,7 +31,7 @@
       {if $contact_infos.phone}
         {l s='Call us: [1]%phone%[/1]'
           sprintf=[
-          '[1]' => '<p><a href="tel:%phone%"><i class="material-icons">phone</i> ',
+          '[1]' => '<p><a href="tel:'|cat:$contact_infos.phone|cat:'"><i class="material-icons">phone</i> ',
           '[/1]' => '</a></p>',
           '%phone%' => $contact_infos.phone
           ]
