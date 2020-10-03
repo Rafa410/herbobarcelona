@@ -62,9 +62,9 @@
       {/if}
     <div class="block-social">
      <ul>
-      <a href="https://www.facebook.com/herbobarcelona" target="_blank" rel="noopener noreferrer"><li class="facebook"></li></a>
-      <a href="https://www.instagram.com/herbobcn" target="_blank" rel="noopener noreferrer"><li class="instagram"></li></a>
-      <a href="https://wa.me/34644428821" target="_blank" rel="noopener noreferrer"><li class="whatsapp"></li></a>
+      <a href="https://www.facebook.com/herbobarcelona" target="_blank" rel="nofollow noopener noreferrer"><li class="facebook"></li></a>
+      <a href="https://www.instagram.com/herbobcn" target="_blank" rel="nofollow noopener noreferrer"><li class="instagram"></li></a>
+      <a href="https://wa.me/34644428821" target="_blank" rel="nofollow noopener noreferrer"><li class="whatsapp"></li></a>
       </ul>
      </div>
   </div>
