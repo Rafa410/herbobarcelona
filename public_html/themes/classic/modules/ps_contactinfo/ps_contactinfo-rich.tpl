@@ -62,8 +62,12 @@
       <div class="data email">
         {l s='Email us:' d='Shop.Theme.Global'}<br/>
       </div>
-      <a href="mailto:{$contact_infos.email}">
-        {$contact_infos.email}
+      <a href="mailto:{if $nutritionist}nutricionista@herbobarcelona.com{else}{$contact_infos.email}{/if}">
+        {if $nutritionist}
+            nutricionista@herbobarcelona.com
+        {else}
+            {$contact_infos.email}
+        {/if}
       </a>
     </div>
   {/if}
