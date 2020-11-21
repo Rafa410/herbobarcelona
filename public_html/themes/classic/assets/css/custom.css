@@ -946,6 +946,10 @@ body#checkout section.checkout-step div.forgot-password {
     margin: 0 2rem;
 }
 
+#cart .all-product-link {
+    display: none;
+}
+
 .all-product-link:hover {
     color: #47ac47;
 }
@@ -1290,6 +1294,10 @@ body#checkout section.checkout-step div.forgot-password {
         transform: rotateZ(180deg);
     }
 
+
+#contact-nutritionist h5 {
+    font-weight: normal;
+}
 
 
 
