@@ -22,14 +22,13 @@
  * @license   https://opensource.org/licenses/AFL-3.0 Academic Free License 3.0 (AFL-3.0)
  * International Registered Trademark & Property of PrestaShop SA
  *}
-{** (Se ha movido a modulo ps_emailsubscription)
-<div class="container">
-  <div class="row">**}
+<div class="container-fluid">
+  <div class="row">
     {block name='hook_footer_before'}
       {hook h='displayFooterBefore'}
     {/block}
-{**  </div>
-</div>**}
+  </div>
+</div>
 <div class="footer-container">
   <div class="container">
     <div class="row">
@@ -46,20 +45,20 @@
       <div class="col-md-12">
         <p class="text-sm-left">
           {block name='copyright_link'}
-            <span{*a class="_blank" href="{$urls.base_url}" target="_blank"*} style="color:#336633">
-              {l s='%copyright% %year% - Ecommerce software by %prestashop%' sprintf=['%prestashop%' => 'PrestaShop™', '%year%' => 'Y'|date, '%copyright%' => '©'] d='Shop.Theme.Global'}
+            <span {*a class="_blank" href="{$urls.base_url}" target="_blank"*} style="color:#336633">
+              {l s='%copyright% %year% - Ecommerce software by %prestashop%' sprintf=['%prestashop%' => 'PrestaShopï¿½', '%year%' => 'Y'|date, '%copyright%' => 'ï¿½'] d='Shop.Theme.Global'}
             </span>
           {/block}
             <span> | </span>
             <a href="{$urls.base_url}aviso-legal_2">Aviso legal</a>
             <span> | </span>
-            <a href="{$urls.base_url}terminos-y-condiciones-de-uso_3">Términos y condiciones</a>
+            <a href="{$urls.base_url}terminos-y-condiciones-de-uso_3">Tï¿½rminos y condiciones</a>
             <span> | </span>
             <a href="{$urls.base_url}pago-seguro_5">Pago seguro</a>
             <span> | </span>
-            <a href="{$urls.base_url}politica-de-cookies_7">Política de cookies</a>
+            <a href="{$urls.base_url}politica-de-cookies_7">Polï¿½tica de cookies</a>
             <span> | </span>
-            <a href="{$urls.base_url}politica-de-privacidad_8">Política de privacidad</a>
+            <a href="{$urls.base_url}politica-de-privacidad_8">Polï¿½tica de privacidad</a>
             <span> | </span>
             <a href="{$urls.base_url}mapa del sitio">Mapa del sitio</a>
         </p>
