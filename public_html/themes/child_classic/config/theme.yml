@@ -62,409 +62,409 @@ global_settings:
       actionAdminGroupsControllerSaveAfter:
         -	ps_featuredproducts
       actionAdminSpecificPriceRuleControllerSaveAfter: 
- 		    -	ps_facetedsearch
+        -	ps_facetedsearch
       actionAdminStoresControllerUpdate_optionsAfter: 
- 		    -	ps_contactinfo
+        -	ps_contactinfo
       actionAfterCreateFeatureFormHandler: 
- 		    -	ps_facetedsearch
+        -	ps_facetedsearch
       actionAfterUpdateFeatureFormHandler: 
- 		    -	ps_facetedsearch
+        -	ps_facetedsearch
       actionAjaxDieProductControllerdisplayAjaxQuickviewBefore: 
- 		    -	pspixel
+        #-	pspixel
       actionAttributeDelete: 
- 		    -	distribudietimport
+        -	distribudietimport
       actionAttributeGroupDelete: 
- 		    -	distribudietimport 
- 		    -	ps_facetedsearch
+        -	distribudietimport 
+        -	ps_facetedsearch
       actionAttributeGroupSave: 
- 		    -	ps_facetedsearch
+        -   ps_facetedsearch
       actionAttributePostProcess: 
- 		    -	ps_facetedsearch
+        -	ps_facetedsearch
       actionAttributeSave: 
- 		    -	ps_facetedsearch
+        -	ps_facetedsearch
       actionCarrierProcess: 
- 		    -	ps_googleanalytics
- 		    -	genei
+        -	ps_googleanalytics
+        -	genei
       actionCarrierUpdate: 
- 		    -	codwfeeplus
- 		    -	genei
+        #-	codwfeeplus
+        -	genei
       actionCartSave: 
- 		    -	mailchimppro
- 		    -	blockwishlist
- 		    -	ps_googleanalytics
+        -	mailchimppro
+        -	blockwishlist
+        -	ps_googleanalytics
       actionCartUpdateQuantityBefore: 
- 		    -	paypal
+        -	paypal
       actionCategoryAdd: 
- 		    -	ps_facetedsearch
+        -	ps_facetedsearch
       actionCategoryDelete: 
- 		    -	distribudietimport
- 		    -	ps_facetedsearch
+        -	distribudietimport
+        -	ps_facetedsearch
       actionCategoryUpdate: 
- 		    -	ps_featuredproducts
- 		    -	ps_mainmenu
- 		    -	ps_facetedsearch
+        -	ps_featuredproducts
+        -	ps_mainmenu
+        -	ps_facetedsearch
       actionCustomerAccountAdd: 
- 		    -	ps_emailsubscription
- 		    -	psgdpr
- 		    -	customerautogroups
- 		    -	mailchimppro
+        -	ps_emailsubscription
+        -	psgdpr
+        -	customerautogroups
+        -	mailchimppro
       actionCustomerAccountUpdate: 
- 		    -	mailchimppro
+        -	mailchimppro
       actionDeleteGDPRCustomer: 
- 		    -	ps_emailsubscription
- 		    -	psgdpr
- 		    -	ps_emailalerts
- 		    -	lgcomments
+        -	ps_emailsubscription
+        -	psgdpr
+        -	ps_emailalerts
+        -	lgcomments
       actionExportGDPRData: 
- 		    -	ps_emailsubscription
- 		    -	ps_emailalerts
- 		    -	lgcomments
+        -	ps_emailsubscription
+        -	ps_emailalerts
+        -	lgcomments
       actionFeatureDelete: 
- 		    -	ps_facetedsearch
+        -	ps_facetedsearch
       actionFeatureFormBuilderModifier: 
- 		    -	ps_facetedsearch
+        -	ps_facetedsearch
       actionFeatureSave: 
- 		    -	ps_facetedsearch
+        -	ps_facetedsearch
       actionFeatureValueDelete: 
- 		    -	ps_facetedsearch
+        -	ps_facetedsearch
       actionFeatureValueSave: 
- 		    -	ps_facetedsearch
+        -	ps_facetedsearch
       actionFrontControllerSetMedia: 
- 		    -	lgcomments
- 		    -	pspixel
- 		    -	mailchimppro
- 		    -	blockreassurance
+        -	lgcomments
+        #-	pspixel
+        -	mailchimppro
+        -	blockreassurance
       actionModuleRegisterHookAfter: 
- 		    -	ps_customeraccountlinks
+        -	ps_customeraccountlinks
       actionModuleUnRegisterHookAfter: 
- 		    -	ps_customeraccountlinks
+        -	ps_customeraccountlinks
       actionObjectCartRuleAddAfter: 
- 		    -	mailchimppro
+        -	mailchimppro
       actionObjectCartRuleDeleteBefore: 
- 		    -	mailchimppro
+        -	mailchimppro
       actionObjectCartRuleUpdateAfter: 
- 		    -	mailchimppro
+        -	mailchimppro
       actionObjectCategoryAddAfter: 
- 		    -	ps_mainmenu
+        -	ps_mainmenu
       actionObjectCategoryDeleteAfter: 
- 		    -	ps_mainmenu
+        -	ps_mainmenu
       actionObjectCategoryUpdateAfter: 
- 		    -	ps_mainmenu
+        -	ps_mainmenu
       actionObjectCmsAddAfter: 
- 		    -	ps_mainmenu
+        -	ps_mainmenu
       actionObjectCmsDeleteAfter: 
- 		    -	ps_mainmenu
+        -	ps_mainmenu
       actionObjectCmsUpdateAfter: 
- 		    -	ps_mainmenu
+        -	ps_mainmenu
       actionObjectCustomerAddAfter: 
- 		    -	mailchimppro
+        -	mailchimppro
       actionObjectDeleteAfter: 
- 		    -	mailchimppro
+        -	mailchimppro
       actionObjectManufacturerAddAfter: 
- 		    -	ps_mainmenu
+        -	ps_mainmenu
       actionObjectManufacturerDeleteAfter: 
- 		    -	ps_mainmenu
- 		    -	distribudietimport
+        -	ps_mainmenu
+        -	distribudietimport
       actionObjectManufacturerUpdateAfter: 
- 		    -	ps_mainmenu
+        -	ps_mainmenu
       actionObjectProductAddAfter: 
- 		    -	ps_mainmenu
+        -	ps_mainmenu
       actionObjectProductDeleteAfter: 
- 		    -	ps_mainmenu
- 		    -	ps_viewedproduct
+        -	ps_mainmenu
+        -	ps_viewedproduct
       actionObjectProductUpdateAfter: 
- 		    -	ps_mainmenu
- 		    -	ps_viewedproduct
+        -	ps_mainmenu
+        -	ps_viewedproduct
       actionObjectSpecificPriceRuleUpdateBefore: 
- 		    -	ps_facetedsearch
+        -	ps_facetedsearch
       actionObjectSupplierAddAfter: 
- 		    -	ps_mainmenu
+        -	ps_mainmenu
       actionObjectSupplierDeleteAfter: 
- 		    -	ps_mainmenu
- 		    -	distribudietimport
+        -	ps_mainmenu
+        -	distribudietimport
       actionObjectSupplierUpdateAfter: 
- 		    -	ps_mainmenu
+        -	ps_mainmenu
       actionObjectUpdateAfter: 
- 		    -	mailchimppro
-      actionOrderEdited: 
- 		    -	ps_emailalerts
-      actionOrderReturn: 
- 		    -	ps_emailalerts
- 		    -	loyalty
+        -	mailchimppro
+      actionOrderEdited:
+        -	ps_emailalerts
+      actionOrderReturn:
+        -	ps_emailalerts
+        -	loyalty
       actionOrderSlipAdd: 
- 		    -	paypal
+        -	paypal
       actionOrderStatusPostUpdate: 
- 		    -	ps_crossselling
- 		    -	paypal
+        -	ps_crossselling
+        -	paypal
       actionOrderStatusUpdate: 
- 		    -	loyalty
- 		    -	mailchimppro
- 		    -	paypal
+        -	loyalty
+        -	mailchimppro
+        -	paypal
       actionProductAdd: 
- 		    -	ps_featuredproducts
- 		    -	ps_categoryproducts
+        -	ps_featuredproducts
+        -	ps_categoryproducts
       actionProductAttributeDelete: 
- 		    -	ps_emailalerts
- 		    -	distribudietimport
+        -	ps_emailalerts
+        -	distribudietimport
       actionProductAttributeUpdate: 
- 		    -	ps_emailalerts
+        -	ps_emailalerts
       actionProductCancel: 
- 		    -	loyalty
- 		    -	ps_googleanalytics
+        -	loyalty
+        -	ps_googleanalytics
       actionProductCoverage: 
- 		    -	ps_emailalerts
+        -	ps_emailalerts
       actionProductDelete: 
- 		    -	ps_featuredproducts
- 		    -	ps_emailalerts
- 		    -	ps_categoryproducts
- 		    -	distribudietimport
+        -	ps_featuredproducts
+        -	ps_emailalerts
+        -	ps_categoryproducts
+        -	distribudietimport
       actionProductOutOfStock: 
- 		    -	ps_emailalerts
+        -	ps_emailalerts
       actionProductSave: 
- 		    -	ps_facetedsearch
+        -	ps_facetedsearch
       actionProductSearchAfter: 
- 		    -	stlazyloading
+        -	stlazyloading
       actionProductUpdate: 
- 		    -	ps_featuredproducts
- 		    -	ps_categoryproducts
- 		    -	mailchimppro
+        -	ps_featuredproducts
+        -	ps_categoryproducts
+        -	mailchimppro
       actionShopDataDuplication: 
- 		    -	ps_imageslider
- 		    -	ps_mainmenu
- 		    -	ps_customtext
+        -	ps_imageslider
+        -	ps_mainmenu
+        -	ps_customtext
       actionUpdateLangAfter: 
- 		    -	ps_linklist
- 		    -	blockreassurance
+        -	ps_linklist
+        -	blockreassurance
       actionUpdateQuantity: 
- 		    -	ps_emailalerts
-      actionValidateOrder: 
- 		    -	ps_emailalerts
- 		    -	loyalty
- 		    -	mailchimppro
+        -	ps_emailalerts
+      actionValidateOrder:
+        -	ps_emailalerts
+        -	loyalty
+        -	mailchimppro
       additionalCustomerFormFields: 
- 		    -	ps_emailsubscription
- 		    -	psgdpr
+        -	ps_emailsubscription
+        -	psgdpr
       dashboardZoneOne: 
- 		    -	psaddonsconnect
+        -	psaddonsconnect
       dashboardZoneTwo: 
- 		    -	distribudietimport
+        -	distribudietimport
       displayAdminAfterHeader: 
- 		    -	xipblog
+        -	xipblog
       displayAdminCartsView: 
- 		    -	paypal
- 		    -	stripe_official
+        -	paypal
+        -	stripe_official
       displayAdminCustomers: 
- 		    -	loyalty
- 		    -	blockwishlist
+        -	loyalty
+        -	blockwishlist
       displayAdminHomeQuickLinks: 
- 		    -	distribudietimport
+        -	distribudietimport
       displayAdminOrder: 
- 		    -	ps_googleanalytics
- 		    -	genei
- 		    -	paypal
- 		    -	stripe_official
+        -	ps_googleanalytics
+        -	genei
+        -	paypal
+        -	stripe_official
       displayAdminOrderContentOrder: 
- 		    -	mailchimppro
- 		    -	paypal
- 		    -	stripe_official
+        -	mailchimppro
+        -	paypal
+        -	stripe_official
       displayAdminOrderTabOrder: 
- 		    -	mailchimppro
- 		    -	paypal
- 		    -	stripe_official
+        -	mailchimppro
+        -	paypal
+        -	stripe_official
       displayAdminStatsModules: 
- 		    -	statssales
- 		    -	distribudietimport
+        -	statssales
+        -	distribudietimport
       displayAfterBodyOpeningTag: 
- 		    -	blockreassurance
-      displayAfterCarrier: 
- 		    -	genei
+        -	blockreassurance
+      displayAfterCarrier:
+        -	genei
       displayAttributeForm: 
- 		    -	ps_facetedsearch
+        -	ps_facetedsearch
       displayAttributeGroupForm: 
- 		    -	ps_facetedsearch
+        -	ps_facetedsearch
       displayAttributeGroupPostProcess: 
- 		    -	ps_facetedsearch
-      displayBackOfficeHeader: 
- 		    -	lgcomments
- 		    -	distribudietimport
- 		    -	smartlook
- 		    -	ps_googleanalytics
- 		    -	emarketing
- 		    -	stripe_official
+        -	ps_facetedsearch
+      displayBackOfficeHeader:
+        -	lgcomments
+        -	distribudietimport
+        -	smartlook
+        -	ps_googleanalytics
+        -	emarketing
+        -	stripe_official
       displayBackOfficeHome: 
- 		    -	distribudietimport
+        -	distribudietimport
       displayBackOfficeTop: 
- 		    -	mailchimppro
+        -	mailchimppro
       displayBeforeBodyClosingTag: 
- 		    -	xipblog
+        -	xipblog
       displayCrossSellingShoppingCart: 
- 		    -	ps_featuredproducts
-      displayCustomerAccount: 
- 		    -	loyalty
- 		    -	blockwishlist
- 		    -	lgcomments
- 		    -	ps_emailalerts
- 		    -	psgdpr
+        -	ps_featuredproducts
+      displayCustomerAccount:
+        -	loyalty
+        -	blockwishlist
+        -	lgcomments
+        -	ps_emailalerts
+        -	psgdpr
       displayCustomerAccountForm: 
- 		    -	oneallsociallogin
+        -	oneallsociallogin
       displayCustomerAccountFormTop: 
- 		    -	oneallsociallogin
+        -	oneallsociallogin
       displayCustomerLoginFormAfter: 
- 		    -	oneallsociallogin
+        -	oneallsociallogin
       displayFeatureForm: 
- 		    -	ps_facetedsearch
+        -	ps_facetedsearch
       displayFeaturePostProcess: 
- 		    -	ps_facetedsearch
+        -	ps_facetedsearch
       displayFeatureValueForm: 
- 		    -	ps_facetedsearch
+        -	ps_facetedsearch
       displayFeatureValuePostProcess: 
- 		    -	ps_facetedsearch
+        -	ps_facetedsearch
       displayFooter: 
- 		    -	ps_linklist
- 		    -	ps_customeraccountlinks
- 		    -	ps_contactinfo
- 		    -	lgcomments
- 		    -	whatsapp 
- 		    -	uecookie
- 		    -	tawkto
- 		    -	smartlook
- 		    -	mailchimppro
- 		    -	ps_googleanalytics
- 		    -	doofinder
+        -	ps_linklist
+        -	ps_customeraccountlinks
+        -	ps_contactinfo
+        -	lgcomments
+        -	whatsapp 
+        -	uecookie
+        -	tawkto
+        -	smartlook
+        -	mailchimppro
+        -	ps_googleanalytics
+        -	doofinder
       displayFooterAfter: 
- 		    -	blockreassurance
-      displayFooterBefore: 
- 		    -	xipblog
- 		    -	scrolltop
- 		    -	ps_emailsubscription
- 		    -	mailchimppro
- 		    -	blockreassurance
+        -	blockreassurance
+      displayFooterBefore:
+        -	xipblog
+        -	scrolltop
+        -	ps_emailsubscription
+        -	mailchimppro
+        -	blockreassurance
       displayFooterProduct: 
- 		    -	lgcomments
- 		    -	ps_crossselling
- 		    -	ps_categoryproducts
- 		    -	ps_viewedproduct
- 		    -	ps_googleanalytics
- 		    -	paypal
+        -	lgcomments
+        -	ps_crossselling
+        -	ps_categoryproducts
+        -	ps_viewedproduct
+        -	ps_googleanalytics
+        -	paypal
       displayGDPRConsent: 
- 		    -	psgdpr
+        -	psgdpr
       displayHome: 
- 		    -	ps_imageslider
- 		    -	textohome
- 		    -	ps_featuredproducts
- 		    -	xipblog
- 		    -	blockreassurance 
- 		    -	lgcomments
- 		    -	ps_customtext
- 		    -	textohomefooter
- 		    -	ps_googleanalytics
+        -	ps_imageslider
+        -	textohome
+        -	ps_featuredproducts
+        -	xipblog
+        -	blockreassurance 
+        -	lgcomments
+        -	ps_customtext
+        -	textohomefooter
+        -	ps_googleanalytics
       displayImaxPrecioRecomendado: 
- 		    -	distribudietimport
+        -	distribudietimport
       displayInvoiceLegalFreeText: 
- 		    -	paypal
+        -	paypal
       displayLeftColumn: 
- 		    -	oneallsociallogin
- 		    -	ps_categorytree
- 		    -	ps_facetedsearch
+        -	oneallsociallogin
+        -	ps_categorytree
+        -	ps_facetedsearch
       displayLgStoreCommentSlider: 
- 		    -	lgcomments
+        -	lgcomments
       displayMobileTopSiteMap: 
- 		    -	doofinder
+        -	doofinder
       displayMyAccountBlock: 
- 		    -	loyalty
- 		    -	blockwishlist
- 		    -	ps_emailalerts
+        -	loyalty
+        -	blockwishlist
+        -	ps_emailalerts
       displayNav1: 
- 		    -	ps_contactinfo
+        -	ps_contactinfo
       displayNav2: 
- 		    -	ps_customersignin
- 		    -	ps_shoppingcart
+        -	ps_customersignin
+        -	ps_shoppingcart
       displayNavFullWidth: 
- 		    -	blockreassurance
+        -	blockreassurance
       displayOrderConfirmation: 
- 		    -	ps_googleanalytics
- 		    -	pspixel 
- 		    -	paypal
- 		    -	stripe_official
+        -	ps_googleanalytics
+        #-	pspixel 
+        -	paypal
+        -	stripe_official
       displayOrderConfirmation2: 
- 		    -	ps_featuredproducts
-      displayPaymentEU: 
- 		    -	stripe_official
+        -	ps_featuredproducts
+      displayPaymentEU:
+        -	stripe_official
       displayPaymentReturn: 
- 		    -	codwfeeplus
- 		    -	ps_wirepayment
+        #-	codwfeeplus
+        -	ps_wirepayment
       displayPaymentTop: 
- 		    -	pspixel
+        #-	pspixel
       displayProductAdditionalInfo: 
- 		    -	blockwishlist
- 		    -	ps_viewedproduct
+        -	blockwishlist
+        -	ps_viewedproduct
       displayProductExtraContent: 
- 		    -	lgcomments
+        -	lgcomments
       displayProductListFunctionalButtons: 
- 		    -	blockwishlist
+        -	blockwishlist
       displayProductListReviews: 
- 		    -	lgcomments
+        -	lgcomments
       displayProductPriceBlock: 
- 		    -	lgcomments
+        -	lgcomments
       displayReassurance: 
- 		    -	blockreassurance
- 		    -	paypal
+        -	blockreassurance
+        -	paypal
       displayRightColumn: 
- 		    -	oneallsociallogin
- 		    -	blockwishlist
+        -	oneallsociallogin
+        -	blockwishlist
       displayRightColumnProduct: 
- 		    -	lgcomments
- 		    -	loyalty
+        -	lgcomments
+        -	loyalty
       displaySearch: 
- 		    -	ps_searchbar
+        -	ps_searchbar
       displayShoppingCartFooter: 
- 		    -	loyalty
- 		    -	paypal
+        -	loyalty
+        -	paypal
       displayTop: 
- 		    -	bonsearch
- 		    -	ps_mainmenu
- 		    -	uecookie
- 		    -	oneallsociallogin
- 		    -	blockwishlist
+        -	bonsearch
+        -	ps_mainmenu
+        -	uecookie
+        -	oneallsociallogin
+        -	blockwishlist
       gSitemapAppendUrls: 
- 		    -	xipblog
+        -	xipblog
       Header: 
- 		    -	ps_imageslider
- 		    -	ps_searchbar
- 		    -	ps_shoppingcart
- 		    -	whatsapp
- 		    -	codwfeeplus
- 		    -	ps_emailalerts
- 		    -	xipblog
- 		    -	lgcomments
- 		    -	uecookie
- 		    -	distribudietimport
- 		    -	textohome
- 		    -	pspixel
- 		    -	oneallsociallogin
- 		    -	bonsearch
- 		    -	gmgetfreeshipping
- 		    -	textohomefooter
- 		    -	scrolltop
- 		    -	stlazyloading
- 		    -	mailchimppro
- 		    -	blockwishlist
- 		    -	ps_googleanalytics
- 		    -	emarketing
- 		    -	doofinder
- 		    -	paypal
- 		    -	stripe_official
+        -	ps_imageslider
+        -	ps_searchbar
+        -	ps_shoppingcart
+        -	whatsapp
+        #-	codwfeeplus
+        -	ps_emailalerts
+        -	xipblog
+        -	lgcomments
+        -	uecookie
+        -	distribudietimport
+        -	textohome
+        #-	pspixel
+        -	oneallsociallogin
+        -	bonsearch
+        -	gmgetfreeshipping
+        -	textohomefooter
+        -	scrolltop
+        -	stlazyloading
+        -	mailchimppro
+        -	blockwishlist
+        -	ps_googleanalytics
+        -	emarketing
+        -	doofinder
+        -	paypal
+        -	stripe_official
       ModuleRoutes: 
- 		    -	xipblog
- 		    -	mailchimppro
+        -	xipblog
+        -	mailchimppro
       payment:
-        -	codwfeeplus
+        #-	codwfeeplus
         -	stripe_official
       paymentOptions:
         -	stripe_official
         -	paypal
         -	ps_wirepayment
-        -	codwfeeplus
+        #-	codwfeeplus
       productSearchProvider:
         -	ps_facetedsearch
         -	doofinder
@@ -473,12 +473,11 @@ global_settings:
       productTabContent:
         -	lgcomments
       registerGDPRConsent: 
- 		    -	contactform
- 		    -	ps_emailsubscription
- 		    -	psgdpr
- 		    -	ps_emailalerts
- 		    -	lgcomments
-
+        -	contactform
+        -	ps_emailsubscription
+        -	psgdpr
+        -	ps_emailalerts
+        -	lgcomments
 
 
 
@@ -511,10 +510,10 @@ global_settings:
       width: 170
       height: 115
       scope: [stores]
-		presmobic_default:
-			width: 480
-			height: 480
-			scope: [products]
+    presmobic_default:
+      width: 480
+      height: 480
+      scope: [products]
 
 theme_settings:
   default_layout: layout-full-width
