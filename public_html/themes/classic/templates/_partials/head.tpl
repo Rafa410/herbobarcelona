@@ -46,40 +46,7 @@
   <link rel="icon" type="image/vnd.microsoft.icon" href="{$shop.favicon}?{$shop.favicon_update_time}">
   <link rel="shortcut icon" type="image/x-icon" href="{$shop.favicon}?{$shop.favicon_update_time}">
 {/block}
-<link rel="preconnect" href="//fonts.googleapis.com">
-{*<link rel="preconnect" href="//connect.facebook.net">*}
-<link rel="preconnect" href="//www.googletagmanager.com">
-<link rel="dns-prefetch" href="//embed.tawk.to">
-<link rel="dns-prefetch" href="//chimpstatic.com">
-<link rel="dns-prefetch" href="//rec.smartlook.com">
-<link rel="dns-prefetch" href="//www.googleadservices.com">
-<link rel="dns-prefetch" href="//www.google-analytics.com">
-{*<link rel="dns-prefetch" href="//www.facebook.com">*}
-<link rel="dns-prefetch" href="//va.tawk.to">
-<link rel="dns-prefetch" href="//stats.g.doubleclick.net">
-<link rel="dns-prefetch" href="//googleads.g.doubleclick.net">
-<link rel="dns-prefetch" href="//www.google.es">
-<link rel="dns-prefetch" href="//www.google.com">
-<link rel="dns-prefetch" href="//cdn.jsdelivr.net">
-<link rel="dns-prefetch" href="https://herbobarcelona.api.oneall.com">
 
-<link rel="manifest" href="/manifest.json">
-<meta name="theme-color" content="#336633"/>
-{if $page.page_name == 'module-xipblog-single'}
-<meta property="fb:app_id" content="2279809748716826">
-<meta property="og:locale" content="es_ES">
-<meta property="og:type" content="article">
-<meta property="og:title" content="{$xipblogpost.post_title}">
-<meta property="og:description" content="{$xipblogpost.post_excerpt}">
-<meta property="og:url" content="{$xipblogpost.link}">
-<meta property="og:site_name" content="{$shop.name}">
-<meta property="article:publisher" content="https://www.facebook.com/herbobarcelona">
-<meta property="og:image" content="{$urls.base_url}{$xipblogpost.post_img_large}">
-<meta property="og:image:secure_url" content="{$urls.base_url}{$xipblogpost.post_img_large}">
-<meta property="og:image:alt" content="{$xipblogpost.post_title}">
-<meta property="og:image:width" content="1170">
-<meta property="og:image:height" content="421">
-{/if}
 {block name='stylesheets'}
   {include file="_partials/stylesheets.tpl" stylesheets=$stylesheets}
 {/block}
