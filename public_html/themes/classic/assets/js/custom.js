@@ -6,15 +6,15 @@
 
         // Carrier ID (Cambiar cada vez que se actualicen los ajustes de un transportista)
         // TODO: Mirar una forma de no tener que actualizarlo cada vez (id_reference_carrier en vez de id_carrier)
-        const correosExpID = '177';
-        const correosEstID = '175';
-        const oficinaCorreosID = '178';
+        const PKcorreosExpID = '189'
+        const correosEstID = '190';
+        const oficinaCorreosID = '191';
         const feliuBcnID = '142';
         const feliuCatID = '144';
         const feliuEspID = '146';
         const puntoRecogidaID = '149';
         const correosExpIntID = '169';
-        const tipsaID = '172';
+        const tipsaID = '174';
 
         const distribudietID = '1';
         const feliubadaloID = '2';
@@ -56,7 +56,7 @@
                 const carrierPrice = document.querySelectorAll(".carrier-price");
                 for (let i = 0; i < carrier.length; i++) {
                     switch (carrier[i].id) {
-                        case correosExpID:   // Correos Express
+                        case PKcorreosExpID: // Correos Express (PackLink)
                         case tipsaID:        // Tipsa
                             supplier = '1';
                             break;
@@ -308,8 +308,8 @@
                 {
                     case '0': 
                     case distribudietID:   // Distribudiet - Correos Express
-                        // maxDate.setHours(14, 0, 0);
-                        maxDate.setHours(12, 30, 0); // Horario verano
+                        maxDate.setHours(13, 0, 0);
+                        // maxDate.setHours(12, 30, 0); // Horario verano
                         shippingDays = 1;
 
                         if (currentDate < maxDate) { // Antes de la hora limite
@@ -341,8 +341,8 @@
 
                     case '4':   // Correos Estandar
                     case '5':   // Oficina Correos
-                        // maxDate.setHours(17, 30, 0);
-                        maxDate.setHours(12, 30, 0); // Horario verano
+                        maxDate.setHours(14, 0, 0);
+                        // maxDate.setHours(12, 30, 0); // Horario verano
                         shippingDays = 2;
 
                         if (currentDate < maxDate)  // Antes de la hora limite      
@@ -353,8 +353,8 @@
                         break;
                     case '7': // TODO
                     default:
-                        // maxDate.setHours(14, 0, 0);
-                        maxDate.setHours(12, 30, 0); // Horario verano
+                        maxDate.setHours(13, 0, 0);
+                        // maxDate.setHours(12, 30, 0); // Horario verano
                         shippingDays = 2;
                         break;
                 }
