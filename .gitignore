@@ -331,3 +331,6 @@ ASALocalRun/
 
 # Minified files
 *.min.*
+
+# statsprofitmargin module
+statsprofitmargin/
