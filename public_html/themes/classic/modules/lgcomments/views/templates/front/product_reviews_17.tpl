@@ -61,7 +61,7 @@
                 <div class="row">
                     <div class="col-md-2 date">
                         {$lgcomment.date|date_format:"$dateformat"|escape:'quotes':'UTF-8'}
-                        <meta itemprop="datePublished" content="{$lgcomment.date|date_format:"%Y-%m-%d"}">
+                        <meta itemprop="datePublished" content="{$lgcomment.date|date_format:"%Y-%m-%e"}">
                     </div>
                     <div itemprop="author" class="col-md-10 nick">
                         {if !$lgcomment.nick}{l s='Anonym' mod='lgcomments'}{else}{$lgcomment.nick|escape:'quotes':'UTF-8'}{/if}

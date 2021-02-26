@@ -18,8 +18,8 @@
                 <p class="alert alert-success">{l s='Thank you very much. Your reviews have been successfully sent, we will publish them soon.' mod='lgcomments'}</p>
             {else}
                 <form method="post" action="{$form_action|escape:'htmlall':'UTF-8'}" id="validate-form">
-                    <label for="lg_nick">{l s='Nick' mod='lgcomments'}</label>
-                    <input type="text" id="lg_nick" name="lg_nick" value="{$nick}" style="display:block;margin-bottom:1em;">
+                    <label for="lg_nick">{l s='Nick' mod='lgcomments'}: </label>
+                    <input type="text" id="lg_nick" name="lg_nick" value="{$nick}" style="margin-bottom:1em;">
 
                     {if $opinionform == 1 || $opinionform == 3}
                         <fieldset>

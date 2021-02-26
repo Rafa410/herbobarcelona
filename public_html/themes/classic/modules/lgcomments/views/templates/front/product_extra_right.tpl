@@ -25,19 +25,19 @@
             <span itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">
                 {if $ratingscale == 5}
                     {l s='Average rating:' mod='lgcomments'}
-                    <span itemprop="ratingValue">{$averagecomments/2|escape:'quotes':'UTF-8'}</span>/<span itemprop="bestRating">5</span> -
+                    <span itemprop="ratingValue">{$averagecomments/2|escape:'quotes':'UTF-8'}</span>/<span itemprop="bestRating">5</span>
                 {elseif $ratingscale == 10}
                     {l s='Average rating:' mod='lgcomments'}
-                    <span itemprop="ratingValue">{$averagecomments|escape:'quotes':'UTF-8'}</span>/<span itemprop="bestRating">10</span> -
+                    <span itemprop="ratingValue">{$averagecomments|escape:'quotes':'UTF-8'}</span>/<span itemprop="bestRating">10</span>
                 {elseif $ratingscale == 20}
                     {l s='Average rating:' mod='lgcomments'}
-                    <span itemprop="ratingValue">{($averagecomments*2)|round:0|escape:'quotes':'UTF-8'}</span>/<span itemprop="bestRating">20</span> -
+                    <span itemprop="ratingValue">{($averagecomments*2)|round:0|escape:'quotes':'UTF-8'}</span>/<span itemprop="bestRating">20</span>
                 {else}
                     {l s='Average rating:' mod='lgcomments'}
-                    <span itemprop="ratingValue">{$averagecomments|escape:'quotes':'UTF-8'}</span>/<span itemprop="bestRating">10</span> -
+                    <span itemprop="ratingValue">{$averagecomments|escape:'quotes':'UTF-8'}</span>/<span itemprop="bestRating">10</span> {*-*}
                 {/if}
-                {l s='Number of reviews:' mod='lgcomments'}
-                <span itemprop="ratingCount">{$comments|escape:'htmlall':'UTF-8'}</span>
+                {*{l s='Number of reviews:' mod='lgcomments'}*}
+                <meta itemprop="ratingCount" content="{$comments|escape:'htmlall':'UTF-8'}">
             </span>
         </div>
     {/if}
