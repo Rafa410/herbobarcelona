@@ -8,7 +8,7 @@
         // TODO: Mirar una forma de no tener que actualizarlo cada vez (id_reference_carrier en vez de id_carrier)
         const PKcorreosExpID = '189'
         const correosEstID = '190';
-        const oficinaCorreosID = '191';
+        const oficinaCorreosID = '192';
         const feliuBcnID = '142';
         const feliuCatID = '144';
         const feliuEspID = '146';
@@ -309,7 +309,6 @@
                     case '0': 
                     case distribudietID:   // Distribudiet - Correos Express
                         maxDate.setHours(13, 0, 0);
-                        // maxDate.setHours(12, 30, 0); // Horario verano
                         shippingDays = 1;
 
                         if (currentDate < maxDate) { // Antes de la hora limite
@@ -330,7 +329,7 @@
                         break;
 
                     case '3':    // Feliubadalo CAT
-                        maxDate.setHours(18, 0, 0);
+                        maxDate.setHours(16, 0, 0);
                         shippingDays = 1;
 
                         if (currentDate < maxDate) {
@@ -340,10 +339,18 @@
                         break;
 
                     case '4':   // Correos Estandar
+                        maxDate.setHours(14, 0, 0);
+                        shippingDays = 2;
+
+                        if (currentDate < maxDate)  // Antes de la hora limite      
+                        {
+                            isBeforeMaxDate = true;
+                        }
+
+                        break;
                     case '5':   // Oficina Correos
                         maxDate.setHours(14, 0, 0);
-                        // maxDate.setHours(12, 30, 0); // Horario verano
-                        shippingDays = 2;
+                        shippingDays = 3;
 
                         if (currentDate < maxDate)  // Antes de la hora limite      
                         {
@@ -354,7 +361,6 @@
                     case '7': // TODO
                     default:
                         maxDate.setHours(13, 0, 0);
-                        // maxDate.setHours(12, 30, 0); // Horario verano
                         shippingDays = 2;
                         break;
                 }
@@ -382,21 +388,9 @@
                     count++;
                 }
 
-                // console.log('DeliveryDate BEFORE while: ' + new Date(deliveryDateMillisec)); // TEST
-                // console.log('Max date BEFORE while: ' + new Date(maxDate)); // TEST
-                // console.log('count BEFORE  while: ' + count); // TEST
-                // console.log('nDays BEFORE while: ' + nDays); // TEST
-                // console.log('------------ BEGINING WHILE -----------'); // TEST
-
                 while (nDays > 0) { // TODO: Cuando nDays==0 y es festivo se añade un dia de mas
 
-                    // console.log('count begining while: ' + count); // TEST
-                    // console.log('nDays begining while: ' + nDays); // TEST
-
                     if ((isWeekend(deliveryDateMillisec)) || (isHolliday(deliveryDateMillisec))) { // Comprueba si la fecha de entrega es fin de semana o festivo
-
-                        // console.log('deliveryDate is weekend OR isHolliday: TRUE : ' + new Date(deliveryDateMillisec)); // TEST
-
                         if ((isWeekend(maxDate)) || (isHolliday(maxDate))) {  // Comprueba si la fecha maxima para pasar el pedido es fin de semana o festivo
                             maxDate += addMillisecondsDay();
                         }
@@ -413,27 +407,15 @@
                         count++;
                     }
 
-                    if ((nDays == 0) && ((isWeekend(deliveryDateMillisec)) || (isHolliday(deliveryDateMillisec)))) {
-
-                        // console.log('nDays == 0 AND deliveryDate isWeekend OR isHolliday : ' + new Date(deliveryDateMillisec)); // TEST
-                        
+                    if ((nDays == 0) && ((isWeekend(deliveryDateMillisec)) || (isHolliday(deliveryDateMillisec)))) {                        
                         deliveryDateMillisec += addMillisecondsDay();
-                        lastDay = true;
-                        
-                        // console.log('lastDay = TRUE ' + new Date(deliveryDateMillisec)); // TEST
-                        
+                        lastDay = true;                        
                         nDays++;
                         count++;
                     }
                     else {
                         lastDay = false;
                     }
-
-                    // console.log('lastDay = ' + lastDay); // TEST
-                    // console.log('DeliveryDate: ' + new Date(deliveryDateMillisec)); // TEST
-                    // console.log('count END  while: ' + count); // TEST
-                    // console.log('nDays END while: ' + nDays); // TEST
-                    // console.log(' ----------- END WHILE ------------'); // TEST
                 }
 
                 if (count == 0) {
