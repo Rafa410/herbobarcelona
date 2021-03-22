@@ -1602,7 +1602,7 @@ body#checkout section.checkout-step div.forgot-password {
 
 
 
-@media(max-width:359px) {
+@media (max-width: 370px) {
     #header .header-nav > .container > .row > .mobile {
         display: flex;
     }
@@ -1623,7 +1623,7 @@ body#checkout section.checkout-step div.forgot-password {
     }
 }
 
-@media(max-width:767px) { 
+@media (max-width: 767px) { 
     #header {
         margin-bottom: 10%;
     }
@@ -1803,7 +1803,7 @@ body#checkout section.checkout-step div.forgot-password {
     }
 }
 
-@media(max-width:991px) {
+@media (max-width: 991px) {
     #header .header-nav .user-info .logged {
         color: #47AC47
     }
@@ -1830,7 +1830,7 @@ body#checkout section.checkout-step div.forgot-password {
     }
 }
 
-@media(min-width:768px) AND (max-width:991px) {
+@media (min-width: 768px) AND (max-width: 991px) {
     .hidden-md {
         display: none !important
     }
@@ -1848,7 +1848,7 @@ body#checkout section.checkout-step div.forgot-password {
     }
 }
 
-@media(min-width:768px) AND (max-width:1099px) {
+@media (min-width: 768px) AND (max-width: 1099px) {
     .carousel .carousel-inner {
         height: 213px
     }
@@ -1858,7 +1858,7 @@ body#checkout section.checkout-step div.forgot-password {
     }
 }
 
-@media(min-width:768px) {
+@media (min-width: 768px) {
     .top-menu .sub-menu ul[data-depth="1"] > li {
         width: 20%
     }
@@ -1943,7 +1943,7 @@ body#checkout section.checkout-step div.forgot-password {
 
 }
 
-@media(min-width:992px) {
+@media (min-width: 992px) {
     #category-description {
         width: 83%
     }
@@ -1976,7 +1976,7 @@ body#checkout section.checkout-step div.forgot-password {
 
 }
 
-@media(min-width:1099px) {
+@media (min-width: 1099px) {
     .carousel .carousel-item .caption {
         bottom: 85px;
         left: 44px
