@@ -23,7 +23,7 @@
  * International Registered Trademark & Property of PrestaShop SA
  *}
 <section class="contact-form">
-  <form action="{$urls.pages.contact}" method="post" {if $contact.allow_file_upload}enctype="multipart/form-data"{/if}>
+  <form action="{if isset($nutritionist)}{$nutritionist_url}{else}{$urls.pages.contact}{/if}" method="post" {if $contact.allow_file_upload}enctype="multipart/form-data"{/if}>
 
     {if $notifications}
       <div class="col-xs-12 alert {if $notifications.nw_error}alert-danger{else}alert-success{/if}">
@@ -40,7 +40,7 @@
 
         <div class="form-group row">
           <div class="col-md-9 col-md-offset-3">
-            {if $nutritionist}
+            {if isset($nutritionist)}
               <h3>{l s='Servicio de Dietista - Nutricionista' d='Shop.Theme.Global'}</h3>
               <h5>&middot; {l s='Solicita tu primera consulta gratuita' d='Shop.Theme.Global'} &middot;</h5>
             {else}
@@ -54,7 +54,7 @@
           <div class="col-md-6">
             <select name="id_contact" class="form-control form-control-select">
               {foreach from=$contact.contacts item=contact_elt}
-                <option value="{$contact_elt.id_contact}" {if ($nutritionist && {$contact_elt.id_contact} == 2) || (!$nutritionist && {$contact_elt.id_contact} == 1)}selected{/if}>{$contact_elt.name}</option>
+                <option value="{$contact_elt.id_contact}" {if (isset($nutritionist) && {$contact_elt.id_contact} == 2) || (!isset($nutritionist) && {$contact_elt.id_contact} == 1)}selected{/if}>{$contact_elt.name}</option>
               {/foreach}
             </select>
           </div>
@@ -120,6 +120,31 @@
               {hook h='displayGDPRConsent' id_module=$id_module}
             </div>
           </div>
+        {/if}
+        
+        {if isset($nutritionist)}
+            <script type="text/javascript">
+            //Recaptcha CallBack Function
+            var onloadCallback = function() {
+                //Fix captcha box issue in ps 1.7.7
+                if ( ! document.getElementById("captcha-box")){
+                        var container = document.createElement("div");
+                        container.setAttribute("id","captcha-box");
+                        if ( null !== document.querySelector(".form-fields") ){
+                             document.querySelector(".form-fields").appendChild(container);
+                        }
+                }
+                if ( document.getElementById("captcha-box")){
+                    const eicaptchaSitekey = "{Configuration::get('CAPTCHA_PUBLIC_KEY')}";
+                    {literal}
+                    grecaptcha.render("captcha-box", {"theme" : "light", "sitekey" : eicaptchaSitekey});
+                    {/literal}
+                } else {
+                    console.warn("eicaptcha: unable to add captcha-box placeholder to display captcha ( not an error when form is submited sucessfully )");
+                }
+            };
+            </script>
+            <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit&hl={Configuration::get('CAPTCHA_FORCE_LANG')}" async defer></script>
         {/if}
 
       </section>
