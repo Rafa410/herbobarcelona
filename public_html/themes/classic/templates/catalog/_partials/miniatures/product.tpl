@@ -37,18 +37,19 @@
       {block name='product_thumbnail'}
         {if $product.cover}
           <a href="{$product.url}" class="thumbnail product-thumbnail  is_stlazyloading">
+            {* <img src = "{$product.cover.bySize.home_default.url}" *}
                         {**Lazy load**}
-<img src="{$stlazyloading.img_prod_url}{$stlazyloading.lang_iso_code}-default-home_default.jpg" class="stlazyloading_holder" width="{$product.cover.bySize.home_default.width}" height="{$product.cover.bySize.home_default.height}" alt="{if !empty($product.cover.legend)}{$product.cover.legend}{else}{$product.name}{/if}" />
-<img data-src = "{$product.cover.bySize.home_default.url}" class="stlazyloadthis"
+            <img src="{$stlazyloading.img_prod_url}{$stlazyloading.lang_iso_code}-default-home_default.jpg" class="stlazyloading_holder" width="{$product.cover.bySize.home_default.width}" height="{$product.cover.bySize.home_default.height}" alt="{if !empty($product.cover.legend)}{$product.cover.legend}{else}{$product.name}{/if}" />
+            <img data-src="{$product.cover.bySize.home_default.url}" class="stlazyloadthis"
                             {*End*}
-              alt = "{if !empty($product.cover.legend)}{$product.cover.legend}{else}{$product.name|truncate:30:'...'}{/if}"
-              data-full-size-image-url = "{$product.cover.large.url}"
+              alt="{if !empty($product.cover.legend)}{$product.cover.legend}{else}{$product.name|truncate:30:'...'}{/if}"
+              data-full-size-image-url="{$product.cover.large.url}"
             >
           </a>
         {else}
           <a href="{$product.url}" class="thumbnail product-thumbnail">
             <img
-              src = "{$urls.no_picture_image.bySize.home_default.url}"
+              src="{$urls.no_picture_image.bySize.home_default.url}"
             >
           </a>
         {/if}
@@ -123,14 +124,14 @@
 
         {block name='product_variants'}
           {if $product.main_variants}
-            {include file='catalog/_partials/variant-links.tpl' variants=$product.main_variants}
+            {include file='parent:catalog/_partials/variant-links.tpl' variants=$product.main_variants}
           {/if}
         {/block}
       </div>
     
     <!-- add-to-cart button on miniatures -->
     <div class="product-add-cart btn-cart-miniature"> {*product-actions*}
-          <form action="{$urls.pages.cart}?add=1&amp;id_product={$product.id}&amp;id_product_attribute={$product.id_customization}&amp;token={$static_token}" method="post">
+          <form action="{$urls.pages.cart}?add=1&amp;id_product={$product.id}&amp;id_product_attribute={if $product.id_customization}{$product.id_customization}{else}0{/if}&amp;token={$static_token}" method="post">
             <input type="hidden" name="id_product" value="{$product.id}">
             <div class="product-add-to-cart">
                 <div class="product-quantity clearfix">
