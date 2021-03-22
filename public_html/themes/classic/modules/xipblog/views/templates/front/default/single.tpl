@@ -56,7 +56,7 @@
 								<div class="meta_category">
 									<i class="material-icons">local_offer</i>
 									<span>{l s='In' mod='xipblog'}</span>
-									<span>{$xipblogpost.category_default_arr.name}</span>
+									<a href="{$xipblogpost.category_default_arr.link}">{$xipblogpost.category_default_arr.name}</a>
 								</div>
 								<div class="meta_comment">
 									 <i class="material-icons">remove_red_eye</i>
