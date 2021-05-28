@@ -67,7 +67,7 @@ class LoyaltyDefaultModuleFrontController extends ModuleFrontController
 		$customer_points = (int)LoyaltyModule::getPointsByCustomer((int)$this->context->customer->id);
 		$allowedTaxZones = Tools::jsonDecode(Configuration::get('PS_LOYALTY_ZONES_TAX'));
 		$customer = new Customer((int)$context->customer->id);
-		$customerCountry = $customer->getCurrentCountry();
+		$customerCountry = $customer->getCurrentCountry($customer->id);
 		$country = new Country((int)$customerCountry);
 		if ($customer_points > 0)
 		{
